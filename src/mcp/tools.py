@@ -5,6 +5,7 @@ import os
 import re
 from datetime import date
 from pathlib import Path
+from src.rag.chunking import MarkdownChunker
 
 DB_FILE = Path(os.getenv('CTXH_DB_FILE', str(Path(__file__).resolve().parents[2] / 'data' / 'ctxh_db.json')))
 
@@ -60,11 +61,48 @@ def convert_ctxh_points(points: float, points_per_day: float) -> dict:
             'warning': 'Tỷ lệ do người gọi cung cấp; cần đối chiếu quy chế DOC0001'}
 
 def convert_ctxh_points_policy(points: int) -> dict:
-    """CTXH.md: 10 points/day; remainder 0..4 => 0, 5 => 0.5, 6..9 => 1 day."""
-    if isinstance(points, bool) or not isinstance(points, int) or points < 0 or points > 100000:
-        raise ValueError('points phải là số nguyên không âm')
-    whole, remainder = divmod(points, 10)
-    days = whole + (0 if remainder < 5 else 0.5 if remainder == 5 else 1)
-    return {'points':points,'days':days,'points_per_day':10,
-            'rounding':'0-4 xuống; 5 = 0.5 ngày; 6-9 lên 1 ngày',
-            'source':'CTXH.md, mục II.c (cần đối chiếu DOC0001 trong corpus)'}
+    if isinstance(points, bool) or not isinstance(points, int) or not 0 <= points <= 100000:
+        raise ValueError("points phải là số nguyên từ 0 đến 100000")
+
+    doc_path = (
+        Path(__file__).resolve().parents[2]
+        / "data"
+        / "corpus"
+        / "DOC0009_quy_doi_diem_ctxh.md"
+    )
+    if not doc_path.is_file():
+        raise FileNotFoundError(f"Không tìm thấy chính sách quy đổi: {doc_path}")
+
+    metadata, _ = MarkdownChunker.parse_yaml_frontmatter(
+        doc_path.read_text(encoding="utf-8")
+    )
+    policy = metadata.get("conversion_policy")
+    if not isinstance(policy, dict):
+        raise ValueError("DOC0009 thiếu metadata conversion_policy")
+
+    rate = policy.get("points_per_day")
+    threshold = policy.get("remainder_threshold")
+    rules = policy.get("remainder_rules")
+
+    if isinstance(rate, bool) or not isinstance(rate, int) or rate <= 0:
+        raise ValueError("points_per_day trong DOC0009 không hợp lệ")
+    if isinstance(threshold, bool) or not isinstance(threshold, int) or not 0 < threshold < rate:
+        raise ValueError("remainder_threshold trong DOC0009 không hợp lệ")
+    if not isinstance(rules, dict):
+        raise ValueError("remainder_rules trong DOC0009 không hợp lệ")
+
+    whole_days, remainder = divmod(points, rate)
+    if remainder < threshold:
+        extra_days = rules["less_than_5"]
+    elif remainder == threshold:
+        extra_days = rules["equal_to_5"]
+    else:
+        extra_days = rules["greater_than_5"]
+
+    days = whole_days + extra_days
+    return {
+        "points": points,
+        "days": days,
+        "points_per_day": rate,
+        "source": f"{metadata['doc_id']}, mục 2. Cách làm tròn",
+    }
