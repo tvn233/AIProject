@@ -203,6 +203,4 @@ Groq API và mô hình E5 là thành phần vận hành chương trình; chúng 
 **Code AI sinh cho Agent:** Không
 ## 3. Kiểm chứng và trách nhiệm
 
-Nhóm đã đối chiếu các gợi ý với mã nguồn và tài liệu CTXH, chạy `python -m unittest discover -s tests -v`, `python -m src.mcp.mcp_client` cùng các demo. Kết quả 16/16 unit test đạt là kết quả đã cung cấp từ lần chạy thực tế, không phải AI tự tạo. Những đoạn code trích ở trên thuộc bản project được cung cấp; những bản nháp AI không có trong project được ghi riêng.
-
-Các hàm `format_ctxh_days`, `validate_ctxh_points`, `format_log_timestamp` được nêu trong bản khai báo cũ nhưng không tồn tại trong mã nguồn ZIP này. Nhóm không khai báo chúng đã được tích hợp. Nhóm chịu trách nhiệm về mã nguồn, dữ liệu, kết quả demo và nội dung khai báo.
+Nhóm đã đối chiếu các gợi ý với mã nguồn và tài liệu CTXH, chạy `python -m unittest discover -s tests -v`, `python -m src.mcp.mcp_client` cùng các demo. Kết quả 16/16 unit test đạt là kết quả đã cung cấp từ lần chạy thực tế, không phải AI tự tạo. Những đoạn code trích ở trên thuộc bản project được cung cấp.
