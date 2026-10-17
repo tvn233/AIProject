@@ -17,9 +17,9 @@
 
 | Hạng mục | Phạm vi hỗ trợ thực tế | File liên quan | Trạng thái |
 |---|---|---|---|
-| Rà soát MCP | Giải thích khác biệt giữa MCP SDK và server cũ; kiểm tra xác nhận trước thao tác ghi | `src/mcp/mcp_server.py`, `src/mcp/mcp_client.py`, `src/mcp/bridge.py` | Đã Thự Thi |
-| Kiểm thử | Hướng dẫn chạy Unit Tests và kiểm tra MCP tool discovery | `tests/`, `main.py` | Đã Thự Thi |
-| Xử lý lỗi | Phân tích lỗi `GROQ_API_KEY`, HTTP 401 và kết quả Agent chưa xét trạng thái điểm | `src/agent/llm_client.py`, `src/agent/agent.py`, `main.py` | Đã Thự Thi |
+| Rà soát MCP | Giải thích khác biệt giữa MCP SDK và server cũ; kiểm tra xác nhận trước thao tác ghi | `src/mcp/mcp_server.py`, `src/mcp/mcp_client.py`, `src/mcp/bridge.py` | Đã Thực Thi |
+| Kiểm thử | Hướng dẫn chạy Unit Tests và kiểm tra MCP tool discovery | `tests/`, `main.py` | Đã Thực Thi |
+| Xử lý lỗi | Phân tích lỗi `GROQ_API_KEY`, HTTP 401 và kết quả Agent chưa xét trạng thái điểm | `src/agent/llm_client.py`, `src/agent/agent.py`, `main.py` | Đã Thực Thi |
 
 
 ## 3. Prompt chính và bằng chứng
