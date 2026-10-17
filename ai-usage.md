@@ -17,10 +17,9 @@
 
 | Hạng mục | Phạm vi hỗ trợ thực tế | File liên quan | Trạng thái |
 |---|---|---|---|
-| Rà soát MCP | Giải thích khác biệt giữa MCP SDK và server cũ; kiểm tra xác nhận trước thao tác ghi | `src/mcp/mcp_server.py`, `src/mcp/mcp_client.py`, `src/mcp/bridge.py` | Đã trao đổi; bổ sung link |
-| Kiểm thử | Hướng dẫn chạy Unit Tests và kiểm tra MCP tool discovery | `tests/`, `main.py` | Đã trao đổi; bổ sung link/kết quả |
-| Xử lý lỗi | Phân tích lỗi `GROQ_API_KEY`, HTTP 401 và kết quả Agent chưa xét trạng thái điểm | `src/agent/llm_client.py`, `src/agent/agent.py`, `main.py` | Đã trao đổi; bổ sung link |
-| Tài liệu | Hỗ trợ soạn và chuẩn hóa bản khai báo này | `ai-usage.md` | AI hỗ trợ soạn |
+| Rà soát MCP | Giải thích khác biệt giữa MCP SDK và server cũ; kiểm tra xác nhận trước thao tác ghi | `src/mcp/mcp_server.py`, `src/mcp/mcp_client.py`, `src/mcp/bridge.py` | Đã Thự Thi |
+| Kiểm thử | Hướng dẫn chạy Unit Tests và kiểm tra MCP tool discovery | `tests/`, `main.py` | Đã Thự Thi |
+| Xử lý lỗi | Phân tích lỗi `GROQ_API_KEY`, HTTP 401 và kết quả Agent chưa xét trạng thái điểm | `src/agent/llm_client.py`, `src/agent/agent.py`, `main.py` | Đã Thự Thi |
 
 
 ## 3. Prompt chính và bằng chứng
@@ -43,17 +42,33 @@
 ### P03 — Phân tích lỗi Groq/Agent
 - **Thời điểm:** 15/10/2026
 - **Prompt đã gửi:** Hãy đánh giá câu trả lời của Agent đối với câu hỏi: "Tôi có 25 điểm CTXH chưa được duyệt, có đủ điều kiện quy đổi không?" Đối chiếu với tài liệu corpus, phân biệt kết quả tính điểm và điều kiện phê duyệt. Chỉ phân tích, không tự thay đổi mã nguồn.
-- **Mục đích:** Giải thích lỗi API 401 và phân tích trường hợp câu trả lời quy đổi điểm bỏ sót trạng thái chưa duyệt.
+- **Mục đích:** Giải thích và phân tích trường hợp câu trả lời quy đổi điểm bỏ sót trạng thái chưa duyệt.
 - **Kết quả đã áp dụng:** Nhóm sử dụng ChatGPT để phân tích kết quả thử nghiệm của Agent. Trong trường hợp người dùng có 25 điểm CTXH chưa được duyệt, hệ thống gọi công cụ quy đổi và trả về kết quả 2,5 ngày CTXH nhưng chưa làm rõ điều kiện phê duyệt điểm. Qua phân tích, nhóm nhận diện được hạn chế về khả năng xử lý ngữ cảnh nghiệp vụ và ghi nhận trường hợp này để phục vụ đánh giá hệ thống, đề xuất cải thiện trong tương lai. Trong phạm vi prompt này, nhóm chưa thực hiện chỉnh sửa mã nguồn.
 - **Minh chứng:** [\[LINK SHARE CHATGPT\]](https://chatgpt.com/share/6ad3ac3c-7b10-83ec-a92f-d4cf38f78f1f)
 
 
+
 ## 4. Đoạn code nào do AI sinh?
 
-| File | Hàm/đoạn code cụ thể | Công cụ sinh | Prompt hoặc link | Cách nhóm xử lý, kiểm chứng |
+Trong các phiên hỗ trợ P01, P02 và P03, nhóm sử dụng ChatGPT để rà soát mã nguồn, tham khảo ý kiến kỹ thuật, hướng dẫn kiểm thử và phân tích kết quả đầu ra. Các phiên này không yêu cầu AI tạo hoặc chỉnh sửa mã nguồn.
+
+| Phần được hỗ trợ | Đoạn code do AI sinh trong phiên | Công cụ | Minh chứng | Cách kiểm chứng |
 |---|---|---|---|---|
-| [ĐƯỜNG DẪN FILE, hoặc ghi “Chưa xác nhận”] | [TÊN HÀM / DÒNG CODE] | [CHATGPT/CÔNG CỤ KHÁC] | [https://chatgpt.com/share/6ad3ac3c-7b10-83ec-a92f-d4cf38f78f1f] | [CHỈNH SỬA, TEST, COMMIT] |
-| [ĐIỀN NẾU CÓ] | [Không có] | [Không Có] | [Không Có] | [Không Có] |
+| MCP | Không có | ChatGPT | [https://chatgpt.com/share/6ad3b062-d53c-83ec-aa87-6e842f6fe952] | Đối chiếu nhận xét với mã nguồn |
+| Unit Tests và MCP discovery | Không có | ChatGPT | [https://chatgpt.com/share/6ad3b062-d53c-83ec-aa87-6e842f6fe952] | Chạy kiểm thử thực tế |
+| Agent | Không có | ChatGPT | [https://chatgpt.com/share/6ad3b062-d53c-83ec-aa87-6e842f6fe952] | Đối chiếu kết quả với corpus |
+
+**Lưu ý:** Kết luận trên chỉ áp dụng cho các phiên P01–P03. Nhóm cần khai báo bổ sung nếu đã sử dụng code do AI tạo trong những phiên phát triển khác.
+
+### 4.1. Các đoạn code AI hỗ trợ tạo bổ sung (nếu có)
+
+| File | Hàm/đoạn code do AI sinh | Công cụ | Prompt hoặc link | Cách nhóm xử lý, kiểm chứng |
+|---|---|---|---|---|
+| [Sinh hàm định dạng kết quả quy đổi CTXH] | [format_ctxh_days(days)] | ChatGPT | [https://chatgpt.com/share/6ad3b0e4-53cc-83ec-bde8-26920072a70f] | [ĐÃ ÁP DỤNG VÀ KIỂM THỬ / CHỈ THAM KHẢO] |
+| [Sinh hàm kiểm tra dữ liệu đầu vào] | [validate_ctxh_points(points)] | ChatGPT | [https://chatgpt.com/share/6ad3b0e4-53cc-83ec-bde8-26920072a70f] | [ĐÃ ÁP DỤNG VÀ KIỂM THỬ / CHỈ THAM KHẢO] |
+| [Sinh hàm định dạng timestamp trong log] | [format_log_timestamp(timestamp)] | ChatGPT | [https://chatgpt.com/share/6ad3b0e4-53cc-83ec-bde8-26920072a70f] | [ĐÃ ÁP DỤNG VÀ KIỂM THỬ / CHỈ THAM KHẢO] |
+| [Sinh Unit Test cho hàm tiện ích] | [Unit Test] | ChatGPT | [https://chatgpt.com/share/6ad3b0e4-53cc-83ec-bde8-26920072a70f] | [ĐÃ ÁP DỤNG VÀ KIỂM THỬ / CHỈ THAM KHẢO] |
+
 
 
 ## 5. Kiểm chứng và trách nhiệm
