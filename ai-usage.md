@@ -22,7 +22,6 @@
 | Xử lý lỗi | Phân tích lỗi `GROQ_API_KEY`, HTTP 401 và kết quả Agent chưa xét trạng thái điểm | `src/agent/llm_client.py`, `src/agent/agent.py`, `main.py` | Đã trao đổi; bổ sung link |
 | Tài liệu | Hỗ trợ soạn và chuẩn hóa bản khai báo này | `ai-usage.md` | AI hỗ trợ soạn |
 
-**Lưu ý:** File được AI *đọc, giải thích hoặc rà soát* không đồng nghĩa với file được AI *sinh code*.
 
 ## 3. Prompt chính và bằng chứng
 
