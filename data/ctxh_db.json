@@ -1,9 +1,9 @@
 {
   "registrations": {
-    "SV24110078_CTXH001": {
-      "student_id": "SV24110078",
-      "activity_code": "CTXH001",
-      "registration_date": "2026-10-08",
+    "[\"SV001\", \"ACT_GREEN\"]": {
+      "student_id": "SV001",
+      "activity_code": "ACT_GREEN",
+      "registration_date": "2026-10-17",
       "status": "REGISTERED_SUCCESS"
     }
   }

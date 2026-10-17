@@ -1,0 +1,12 @@
+{"id":"Q01","question":"Quy định chung về CTXH đối với sinh viên là gì?","expected_doc_ids":["DOC0001"],"no_answer":false}
+{"id":"Q02","question":"Sinh viên phải tích lũy bao nhiêu ngày CTXH để tốt nghiệp?","expected_doc_ids":["DOC0001"],"no_answer":false}
+{"id":"Q03","question":"Có những mã hoạt động CTXH nào?","expected_doc_ids":["DOC0002"],"no_answer":false}
+{"id":"Q04","question":"Các bước đăng ký hoạt động CTXH là gì?","expected_doc_ids":["DOC0003"],"no_answer":false}
+{"id":"Q05","question":"Trường hợp nào bị từ chối ghi nhận CTXH?","expected_doc_ids":["DOC0004"],"no_answer":false}
+{"id":"Q06","question":"Sau khi tham gia, sinh viên xác nhận CTXH như thế nào?","expected_doc_ids":["DOC0005"],"no_answer":false}
+{"id":"Q07","question":"Muốn tra soát điểm CTXH cần làm gì?","expected_doc_ids":["DOC0006"],"no_answer":false}
+{"id":"Q08","question":"Làm thế nào để tra cứu kết quả CTXH?","expected_doc_ids":["DOC0007"],"no_answer":false}
+{"id":"Q09","question":"Mua iPhone 18 Pro Max có được cộng 100 điểm CTXH không?","expected_doc_ids":[],"no_answer":true}
+{"id":"Q10","question":"Đoạt giải xổ số có được miễn toàn bộ CTXH không?","expected_doc_ids":[],"no_answer":true}
+{"id":"Q11","question":"Mã OTP ngân hàng của hiệu trưởng là bao nhiêu?","expected_doc_ids":[],"no_answer":true}
+{"id":"Q12","question":"Ngày mai trời mưa thì tự động được cộng 50 điểm CTXH phải không?","expected_doc_ids":[],"no_answer":true}

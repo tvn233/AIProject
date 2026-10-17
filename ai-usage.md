@@ -1,15 +1,12 @@
-# AI Usage Transparency Report - Final_Project_T5
+# Khai báo sử dụng AI – cần xác nhận trước khi nộp
 
-## Student Information
-- **Name:** Hà Ngọc Bảo
-- **Student ID:** 24110078
-- **Role / Scope:** MCP Server, Data Models, and Unit Testing (`src/models.py`, `src/mcp/server.py`, `tests/test_mcp.py`, `data/ctxh_db.json`)
+- Công cụ: ChatGPT (OpenAI), sử dụng hỗ trợ lập trình và soạn tài liệu.
+- Phần RAG: hỗ trợ đọc/kiểm tra `src/rag/*`, unit tests, chunking và README (đánh dấu chính xác các phần nhóm đã thực sự dùng AI).
+- Phần Agent: AI hỗ trợ tạo `src/agent/agent.py`, `src/agent/llm_client.py`, `prompts/system_prompt.txt`, `main.py`, `tests/test_agent.py`.
+- Phần MCP: AI hỗ trợ thiết kế/bổ sung `src/mcp/tools.py`, `mcp_server.py`, `mcp_client.py`, `bridge.py`, `tests/test_mcp_integration.py`.
+- Phần chung: AI hỗ trợ `scripts/evaluate.py`, `tests/testset.jsonl`, `src/agent/logging_utils.py`, `tests/test_common.py`, `README.md`, `Makefile`, tài liệu báo cáo.
+- Prompt chính (tóm tắt): "Hướng dẫn hoàn thiện đồ án CTXH Python W1–W7; tích hợp RAG/Agent/MCP; testset >=12 câu, >=4 no_answer; trace token, evaluation; báo cáo theo yêu cầu giảng viên".
+- Kiểm tra độc lập của nhóm: [điền test thực tế, lỗi đã sửa, người review, ngày].
+- Phần do từng thành viên tự chỉnh sửa: [điền trung thực file/commit].
 
-## AI Tool Assistance Overview
-During the development of this project, AI was utilized as a technical assistant for:
-1. **Model Design (`src/models.py`):** Structuring dataclasses with explicit type hints for MCP tool parameters.
-2. **MCP Protocol Implementation (`src/mcp/server.py`):** Designing the Stdio JSON-RPC loop, enforcing absolute path resolution (`os.path.abspath`), ensuring stdout hygiene (zero `print()` usage, flushing buffers), and implementing robust exception handling (`try-except`).
-3. **Unit Testing (`tests/test_mcp.py`):** Writing validation scripts to verify side effects (writing to JSON DB) and verification reads.
-
-## Verification & Personal Ownership
-All generated suggestions, protocol loops, and error-handling mechanisms were thoroughly reviewed, manually tested, and verified by the author to ensure complete ownership and correctness during academic evaluation.
+**Chú ý:** Đây là bản nháp khai báo, nhóm phải rà soát cho khớp quá trình sử dụng AI thực tế, không sao chép nguyên nếu không chính xác.
