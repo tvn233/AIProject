@@ -1,111 +1,72 @@
-# AI Usage Transparency Report
+# AI USAGE DECLARATION
 
-**Project:** AI-powered Student Social Work (CTXH) Activity Registration Agent  
-**Student Name:** Hà Ngọc Bảo  
-**Student ID:** 24110078  
-
----
-
-## 1. Công cụ AI sử dụng và phương thức phối hợp
-
-- **Công cụ:** Google Gemini / LLMs.
-- **Phương thức:** Sử dụng AI để gợi ý cấu trúc và viết sơ bộ (draft) một số đoạn code cơ bản. Sau đó, Human trực tiếp kiểm tra, tinh chỉnh logic, xử lý đường dẫn, viết Unit Test, tích hợp các thành phần và quản lý mã nguồn trên Git/GitHub.
-
-## 2. Chi tiết đóng góp, prompt gợi ý và mã nguồn phác thảo từ AI
-
-### A. Phần Data Models (`src/models.py`)
-
-- **Phần việc:** Xây dựng cấu trúc dữ liệu sử dụng Type Hinting cho các tham số đầu vào của MCP Tool.
-- **Prompt gợi ý / Viết sơ bộ:**
-
-  > Gợi ý giúp tôi khung cơ bản sử dụng `dataclass` trong Python cho các tham số đầu vào của công cụ đăng ký hoạt động công tác xã hội.
-
-- **Mã nguồn phác thảo do AI gợi ý (Draft):**
-
-```python
-from dataclasses import dataclass
+**Đồ án:** Trợ lý CTXH – Quy đổi & Đăng ký  
+**Nhóm:** 09
+**Repository:** https://github.com/tvn233/AIProject  
+**Ngày cập nhật:** [17/10/2026]
 
 
-@dataclass
-class RegisterCtxhActivityArgs:
-    student_id: str
-    activity_code: str
-```
+## 1. Công cụ AI đã sử dụng
 
-### B. Phần MCP Server và Stdio Communication (`src/mcp/server.py`)
+| Công cụ | Vai trò thực tế | Bằng chứng |
+|---|---|---|
+| ChatGPT (OpenAI) | Giải thích cấu trúc dự án, hỗ trợ rà soát MCP, hướng dẫn kiểm thử, phân tích lỗi chạy chương trình và Git | [LINK CUỘC TRÒ CHUYỆN / PROJECT] |
+| [CÔNG CỤ KHÁC NẾU THỰC SỰ DÙNG] | [CÔNG VIỆC THỰC TẾ] | [LINK/BẰNG CHỨNG] |
 
-- **Phần việc:** Xây dựng vòng lặp giao tiếp qua Stdio, xử lý request JSON, sử dụng đường dẫn database tuyệt đối và tách thông báo lỗi sang `stderr` để tránh làm nhiễu dữ liệu giao tiếp trên `stdout`.
 
-- **Prompt gợi ý / Viết sơ bộ:**
+## 2. AI hỗ trợ phần nào?
 
-  > Hãy phác thảo sơ bộ đoạn code Python xử lý giao tiếp Stdio JSON-RPC, lưu ý cách bỏ qua dòng trống, bắt ngoại lệ và ghi lỗi ra stderr, đồng thời sử dụng stdout flush.
+| Hạng mục | Phạm vi hỗ trợ thực tế | File liên quan | Trạng thái |
+|---|---|---|---|
+| Rà soát MCP | Giải thích khác biệt giữa MCP SDK và server cũ; kiểm tra xác nhận trước thao tác ghi | `src/mcp/mcp_server.py`, `src/mcp/mcp_client.py`, `src/mcp/bridge.py` | Đã trao đổi; bổ sung link |
+| Kiểm thử | Hướng dẫn chạy Unit Tests và kiểm tra MCP tool discovery | `tests/`, `main.py` | Đã trao đổi; bổ sung link/kết quả |
+| Xử lý lỗi | Phân tích lỗi `GROQ_API_KEY`, HTTP 401 và kết quả Agent chưa xét trạng thái điểm | `src/agent/llm_client.py`, `src/agent/agent.py`, `main.py` | Đã trao đổi; bổ sung link |
+| Tài liệu | Hỗ trợ soạn và chuẩn hóa bản khai báo này | `ai-usage.md` | AI hỗ trợ soạn |
+| [HẠNG MỤC KHÁC] | [CHỈ ĐIỀN NẾU CÓ SỬ DỤNG THẬT] | [FILE/HÀM] | [BẰNG CHỨNG] |
 
-- **Mã nguồn phác thảo do AI gợi ý (Draft):**
+**Lưu ý:** File được AI *đọc, giải thích hoặc rà soát* không đồng nghĩa với file được AI *sinh code*.
 
-```python
-if __name__ == "__main__":
-    for line in sys.stdin:
-        if not line.strip():
-            continue
+## 3. Prompt chính và bằng chứng
 
-        try:
-            req = json.loads(line)
-            res = handle_mcp_request(req)
+### P01 — Rà soát kiến trúc MCP
+- **Thời điểm:** 13/10/2026
+- **Prompt đã gửi:** Hãy đọc các file MCP trong dự án tôi đã tải lên. Giải thích vai trò của `mcp_server.py`, `mcp_client.py` và `bridge.py`. Kiểm tra cơ chế xác nhận trước khi ghi dữ liệu và chỉ ra các rủi ro nếu có. Không tự sửa code, chỉ đưa nhận xét dựa trên mã nguồn.
+- **Mục đích:** Xác định luồng MCP chính thức, phân biệt mã cũ và kiểm tra bước xác nhận trước ghi dữ liệu.
+- **Phần được hỗ trợ:** `src/mcp/mcp_server.py`, `src/mcp/mcp_client.py`, `src/mcp/bridge.py`.
+- **Kết quả đã áp dụng:** Sử dụng các nhận xét từ ChatGPT để rà soát kiến trúc MCP, xác định MCP Server chính thức sử dụng SDK, kiểm tra cơ chế xác nhận trước thao tác đăng ký và quy trình đọc lại dữ liệu để xác minh kết quả. Nhóm đã đối chiếu các nhận xét với mã nguồn và loại bỏ phiên bản MCP cũ không còn phù hợp với luồng xử lý chính.
+- **Minh chứng:** [\[LINK SHARE CHATGPT\]](https://chatgpt.com/share/6ad3ac3c-7b10-83ec-a92f-d4cf38f78f1f)
 
-            sys.stdout.write(json.dumps(res) + "\n")
-            sys.stdout.flush()
+### P02 — Hướng dẫn kiểm thử và tái hiện lỗi
+- **Thời điểm:** 14/10/2026
+- **Prompt đã gửi:** Dựa trên cấu trúc đồ án, hãy hướng dẫn tôi kiểm thử Unit Tests và MCP tool discovery bằng PowerShell. Giải thích ý nghĩa của kết quả PASS/FAIL và những lỗi thường gặp. Không tự tạo kết quả kiểm thử giả.
+- **Mục đích:** Hướng dẫn chạy `python -m unittest discover -s tests -v` và kiểm tra danh sách MCP tools.
+- **Kết quả đã áp dụng:** Nhóm tham khảo hướng dẫn của ChatGPT để thực hiện kiểm thử chương trình trong môi trường Python 3.11. Kết quả ghi nhận 16/16 Unit Tests PASS. Đồng thời, nhóm kiểm tra MCP tool discovery và xác nhận hệ thống nhận diện được 4 công cụ: register_ctxh_activity_tool, get_ctxh_registration_status_tool, convert_ctxh_points_tool và convert_ctxh_points_policy_tool. Các kết quả được sử dụng để kiểm tra khả năng hoạt động của hệ thống trước khi hoàn thiện đồ án.
+- **Minh chứng:** [\[LINK SHARE CHATGPT\]](https://chatgpt.com/share/6ad3ac3c-7b10-83ec-a92f-d4cf38f78f1f)
 
-        except Exception as e:
-            sys.stderr.write(f"Error: {str(e)}\n")
-```
+### P03 — Phân tích lỗi Groq/Agent
+- **Thời điểm:** 15/10/2026
+- **Prompt đã gửi:** Hãy đánh giá câu trả lời của Agent đối với câu hỏi: "Tôi có 25 điểm CTXH chưa được duyệt, có đủ điều kiện quy đổi không?" Đối chiếu với tài liệu corpus, phân biệt kết quả tính điểm và điều kiện phê duyệt. Chỉ phân tích, không tự thay đổi mã nguồn.
+- **Mục đích:** Giải thích lỗi API 401 và phân tích trường hợp câu trả lời quy đổi điểm bỏ sót trạng thái chưa duyệt.
+- **Kết quả đã áp dụng:** Nhóm sử dụng ChatGPT để phân tích kết quả thử nghiệm của Agent. Trong trường hợp người dùng có 25 điểm CTXH chưa được duyệt, hệ thống gọi công cụ quy đổi và trả về kết quả 2,5 ngày CTXH nhưng chưa làm rõ điều kiện phê duyệt điểm. Qua phân tích, nhóm nhận diện được hạn chế về khả năng xử lý ngữ cảnh nghiệp vụ và ghi nhận trường hợp này để phục vụ đánh giá hệ thống, đề xuất cải thiện trong tương lai. Trong phạm vi prompt này, nhóm chưa thực hiện chỉnh sửa mã nguồn.
+- **Minh chứng:** [\[LINK SHARE CHATGPT\]](https://chatgpt.com/share/6ad3ac3c-7b10-83ec-a92f-d4cf38f78f1f)
 
-### C. Phần Side-Effect Tool và Verification Tool (`src/mcp/server.py`)
 
-- **Phần việc:** Xây dựng Write Tool (`register_ctxh_activity`) để ghi nhận đăng ký hoạt động và Read Tool (`get_ctxh_registration_status`) để đọc lại, kiểm chứng trạng thái đăng ký.
+## 4. Đoạn code nào do AI sinh?
 
-- **Prompt gợi ý / Viết sơ bộ:**
+| File | Hàm/đoạn code cụ thể | Công cụ sinh | Prompt hoặc link | Cách nhóm xử lý, kiểm chứng |
+|---|---|---|---|---|
+| [ĐƯỜNG DẪN FILE, hoặc ghi “Chưa xác nhận”] | [TÊN HÀM / DÒNG CODE] | [CHATGPT/CÔNG CỤ KHÁC] | [https://chatgpt.com/share/6ad3ac3c-7b10-83ec-a92f-d4cf38f78f1f] | [CHỈNH SỬA, TEST, COMMIT] |
+| [ĐIỀN NẾU CÓ] | [Không có] | [Không Có] | [Không Có] | [Không Có] |
 
-  > Cho tôi ý tưởng và code mẫu ngắn gọn về cách viết hàm xử lý tool ghi nhận trạng thái vào từ điển hoặc file JSON, cùng với hàm đọc lại để kiểm chứng.
 
-- **Mã nguồn phác thảo do AI gợi ý (Draft):**
+## 5. Kiểm chứng và trách nhiệm
 
-```python
-if name == "register_ctxh_activity":
-    student_id = args.get("student_id")
-    activity_code = args.get("activity_code")
-key = f"{student_id}_{activity_code}"
+- Các thành viên tự chạy và kiểm tra mã nguồn trong môi trường Python của nhóm.
+- Kiểm thử bằng `python -m unittest discover -s tests -v` và `python -m src.mcp.mcp_client`; ghi kết quả thực tế tại [LINK LOG/ẢNH].
+- Những gợi ý của AI không được xem là kết quả đúng nếu chưa đối chiếu code, tài liệu CTXH hoặc chạy kiểm thử.
+- Nhóm chịu trách nhiệm về mã nguồn, dữ liệu, kết quả demo và nội dung báo cáo.
 
-    db["registrations"][key] = {
-        "student_id": student_id,
-        "activity_code": activity_code,
-        "status": "REGISTERED"
-    }
+## 6. Danh sách minh chứng
 
-    save_db(db)
+- **Link Project ChatGPT:** [\[LINK PROJECT HOẶC GHI KHÔNG CÓ\]](https://chatgpt.com/share/6ad3ac3c-7b10-83ec-a92f-d4cf38f78f1f)
 
-    return {
-        "content": [
-            {
-                "type": "text",
-                "text": "Đăng ký thành công"
-            }
-        ]
-    }
-```
-## Student Information
-- **Name:** Trương Văn Ngọc
-- **Student ID:** 24110111
-- **Role:** Data & RAG
-
-## AI Usage Disclosure
-- **AI tool used:** ChatGPT (OpenAI).
-- **How AI was used:** Tôi hỏi ChatGPT cách chia tài liệu Markdown thành chunk, giữ metadata, tạo embedding, kết hợp Dense với BM25 và tạo câu trả lời dựa trên context truy xuất. ChatGPT đưa ra hướng dẫn và gợi ý một số đoạn code; tôi xem xét, tích hợp vào dự án, chạy trên corpus CTXH và kiểm tra kết quả.
-- **Representative prompts:**
-  - “Làm thế nào để chia tài liệu Markdown thành chunk và giữ metadata?”
-  - Làm thế nào để convert_ctxh_points_policy đọc conversion_policy từ file Markdown DOC0009 rồi tính  số ngày theo quy tắc đó?”
-  - “Làm thế nào để kết hợp Dense và BM25?”
-  - “Làm thế nào để chạy demo RAG và kiểm tra câu trả lời có nguồn?”
-  - “Giải thích kết quả truy xuất Dense/Hybrid và kiểm tra câu hỏi không có đáp án.”
-- **Files involved:** `src/rag/chunking.py`, `src/rag/retriever.py`, `src/rag/demo_retrieval.py`, `src/rag/demo_groq_rag.py`, `src/rag/generator.py`, `src/rag/evaluate_rag.py`.
-- **AI-generated code:** ChatGPT gợi ý hoặc sinh một số đoạn code, sau đó tôi xem xét và tích hợp, trong `src/rag/chunking.py`, `src/rag/embeddings.py`, `src/rag/retriever.py`, `src/rag/generator.py`, `src/rag/demo_retrieval.py` và `src/rag/demo_groq_rag.py`. Các đoạn hỗ trợ lần lượt việc chia chunk, tạo embedding, truy xuất Dense/Hybrid và nối phần truy xuất với khâu tạo câu trả lời; không phải toàn bộ nội dung của các tệp.
-- **Student verification:** Tôi chạy `python -m src.rag.chunking` và kiểm tra kết quả 19 chunks từ 8 tài liệu cùng metadata của các chunk. Tôi chạy `python -m src.rag.demo_retrieval` để xem kết quả Dense và Hybrid, rồi chạy `python -m src.rag.evaluate_rag` để kiểm tra câu hỏi có đáp án và câu hỏi không có đáp án trong corpus; kết quả chạy được báo PASS.
