@@ -10,8 +10,7 @@
 
 | Công cụ | Vai trò thực tế | Bằng chứng |
 |---|---|---|
-| ChatGPT (OpenAI) | Giải thích cấu trúc dự án, hỗ trợ rà soát MCP, hướng dẫn kiểm thử, phân tích lỗi chạy chương trình và Git | [LINK CUỘC TRÒ CHUYỆN / PROJECT] |
-| [CÔNG CỤ KHÁC NẾU THỰC SỰ DÙNG] | [CÔNG VIỆC THỰC TẾ] | [LINK/BẰNG CHỨNG] |
+| ChatGPT (OpenAI) | Giải thích cấu trúc dự án, hỗ trợ rà soát MCP, hướng dẫn kiểm thử, phân tích lỗi chạy chương trình và Git. Hỗ trợ gợi ý sửa bug, các câu lệnh chạy trong terminal... | https://chatgpt.com/share/6ad3aead-b7a0-83ec-bff0-f4b6f3f55dcf |
 
 
 ## 2. AI hỗ trợ phần nào?
@@ -22,7 +21,6 @@
 | Kiểm thử | Hướng dẫn chạy Unit Tests và kiểm tra MCP tool discovery | `tests/`, `main.py` | Đã trao đổi; bổ sung link/kết quả |
 | Xử lý lỗi | Phân tích lỗi `GROQ_API_KEY`, HTTP 401 và kết quả Agent chưa xét trạng thái điểm | `src/agent/llm_client.py`, `src/agent/agent.py`, `main.py` | Đã trao đổi; bổ sung link |
 | Tài liệu | Hỗ trợ soạn và chuẩn hóa bản khai báo này | `ai-usage.md` | AI hỗ trợ soạn |
-| [HẠNG MỤC KHÁC] | [CHỈ ĐIỀN NẾU CÓ SỬ DỤNG THẬT] | [FILE/HÀM] | [BẰNG CHỨNG] |
 
 **Lưu ý:** File được AI *đọc, giải thích hoặc rà soát* không đồng nghĩa với file được AI *sinh code*.
 
