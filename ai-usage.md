@@ -60,7 +60,7 @@ Trong các phiên hỗ trợ P01, P02 và P03, nhóm sử dụng ChatGPT để r
 
 **Lưu ý:** Kết luận trên chỉ áp dụng cho các phiên P01–P03. Nhóm cần khai báo bổ sung nếu đã sử dụng code do AI tạo trong những phiên phát triển khác.
 
-### 4.1. Các đoạn code AI hỗ trợ tạo bổ sung (nếu có)
+### 4.1. Các đoạn code AI hỗ trợ tạo bổ sung
 
 | File | Hàm/đoạn code do AI sinh | Công cụ | Prompt hoặc link | Cách nhóm xử lý, kiểm chứng |
 |---|---|---|---|---|
