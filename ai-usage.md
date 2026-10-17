@@ -48,17 +48,18 @@
 
 
 
+
 ## 4. Đoạn code nào do AI sinh?
 
-Trong các phiên hỗ trợ P01, P02 và P03, nhóm sử dụng ChatGPT để rà soát mã nguồn, tham khảo ý kiến kỹ thuật, hướng dẫn kiểm thử và phân tích kết quả đầu ra. Các phiên này không yêu cầu AI tạo hoặc chỉnh sửa mã nguồn.
+Trong các phiên hỗ trợ P01, P02, P03 và P04, nhóm sử dụng ChatGPT để rà soát mã nguồn, tham khảo ý kiến kỹ thuật, hướng dẫn kiểm thử, phân tích kết quả đầu ra và đánh giá hệ thống RAG. Các phiên này chỉ sử dụng AI để hỗ trợ phân tích và đưa ra nhận xét, không yêu cầu AI trực tiếp tạo hoặc chỉnh sửa mã nguồn.
 
 | Phần được hỗ trợ | Đoạn code do AI sinh trong phiên | Công cụ | Minh chứng | Cách kiểm chứng |
 |---|---|---|---|---|
-| MCP | Không có | ChatGPT | [https://chatgpt.com/share/6ad3b062-d53c-83ec-aa87-6e842f6fe952] | Đối chiếu nhận xét với mã nguồn |
-| Unit Tests và MCP discovery | Không có | ChatGPT | [https://chatgpt.com/share/6ad3b062-d53c-83ec-aa87-6e842f6fe952] | Chạy kiểm thử thực tế |
-| Agent | Không có | ChatGPT | [https://chatgpt.com/share/6ad3b062-d53c-83ec-aa87-6e842f6fe952] | Đối chiếu kết quả với corpus |
+| MCP | Không có | ChatGPT | [Xem minh chứng](https://chatgpt.com/share/6ad3b062-d53c-83ec-aa87-6e842f6fe952) | Đối chiếu nhận xét với mã nguồn MCP hiện có |
+| Unit Tests và MCP discovery | Không có | ChatGPT | [Xem minh chứng](https://chatgpt.com/share/6ad3b062-d53c-83ec-aa87-6e842f6fe952) | Chạy kiểm thử thực tế và kiểm tra danh sách MCP tools |
+| Agent | Không có | ChatGPT | [Xem minh chứng](https://chatgpt.com/share/6ad3b062-d53c-83ec-aa87-6e842f6fe952) | Đối chiếu kết quả đầu ra với tài liệu corpus |
+| RAG (Retrieval-Augmented Generation) | Không có | ChatGPT | [Xem minh chứng](https://chatgpt.com/share/6ad3b062-d53c-83ec-aa87-6e842f6fe952) | Rà soát quy trình truy xuất, đối chiếu kết quả Dense/Hybrid Retrieval với dữ liệu đánh giá thực tế |
 
-**Lưu ý:** Kết luận trên chỉ áp dụng cho các phiên P01–P03. Nhóm cần khai báo bổ sung nếu đã sử dụng code do AI tạo trong những phiên phát triển khác.
 
 ### 4.1. Các đoạn code AI hỗ trợ tạo bổ sung
 
