@@ -1,0 +1,1 @@
+{"timestamp": "2026-10-17T13:34:31.646050+00:00", "event": "llm_api_error", "model": "test-model", "error_type": "FakeHTTPError", "status_code": 429, "attempt": 1}

@@ -1,0 +1,20 @@
+{
+  "timestamp": "2026-10-17T13:15:27.142820+00:00",
+  "total_cases": 12,
+  "no_answer_cases": 4,
+  "top_k": 3,
+  "live_agent": true,
+  "modes": {
+    "dense": {
+      "retrieval_hit_at_k": 0.875,
+      "count_answerable": 8
+    },
+    "hybrid": {
+      "retrieval_hit_at_k": 0.75,
+      "count_answerable": 8
+    }
+  },
+  "agent_completed": 16,
+  "agent_errors": 8,
+  "agent_pending": 0
+}

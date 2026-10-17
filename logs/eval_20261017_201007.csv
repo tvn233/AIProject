@@ -1,0 +1,62 @@
+﻿id,mode,no_answer,expected_docs,retrieved_docs,hit_at_k,answer,refusal_review,faithfulness_review,calls,prompt_tokens,completion_tokens,max_prompt,agent_status,agent_error,elapsed_seconds
+Q01,dense,False,DOC0001,DOC0001|DOC0008|DOC0006,True,"Quy định chung về CTXH đối với sinh viên được ghi trong **điều 1. Mục đích và Quy định chung** của Quy chế quản lý và ghi nhận Hoạt động Công tác xã hội Sinh viên HCMUTE (doc_id: **DOC0001**, section: *1. Mục đích và Quy định chung*).  
+- Sinh viên chính quy HCMUTE bắt buộc phải hoàn thành đủ số ngày/giờ CTXH theo quy định chương trình đào tạo để xét tốt nghiệp.  
+- Yêu cầu tối thiểu là **40 điểm CTXH** là một trong những điều kiện cần thiết để xét tốt nghiệp.  
+
+Ngoài ra, có những trường hợp miễn trừ hoàn toàn nghĩa vụ tích lũy CTXH, được quy định trong **điều 1. Đối tượng được MIỄN hoàn toàn nghĩa vụ tích lũy CTXH** (doc_id: **DOC0008**, section: *1. Đối tượng được MIỄN hoàn toàn nghĩa vụ tích lũy CTXH*). Ví dụ: sinh viên hệ Liên thông và sinh viên khuyết tật/ thương tật vĩnh viễn được miễn trừ quỹ điểm CTXH trong suốt quá trình học tập tại trường.",,,2,2110,540,1318,ok,,12.03
+Q02,dense,False,DOC0001,DOC0008|DOC0001|DOC0005,True,Không có thông tin đủ căn cứ trong các tài liệu được tra cứu để xác định số ngày CTXH cần tích lũy để tốt nghiệp.,,,2,2217,284,1422,ok,,2.06
+Q03,dense,False,DOC0002,DOC0002|DOC0003|DOC0001,True,"Các mã hoạt động CTXH được liệt kê trong tài liệu “Danh mục Mã Hoạt động CTXH và Thông tin Chi tiết” (doc_id: **DOC0002**, section: **1. Danh sách các mã hoạt động và định mức điểm tiêu chuẩn**):
+
+| Mã hoạt động | Mô tả ngắn gọn |
+|--------------|----------------|
+| **ACT_MHX** | Chiến dịch Tình nguyện Mùa hè xanh |
+| **ACT_XTN** | Chiến dịch Xuân Tình nguyện |
+| **ACT_TSMT** | Chương trình Tiếp sức Mùa thi |
+| **ACT_HMND** | Ngày hội Hiến máu Tình nguyện |
+
+Nếu cần thông tin chi tiết hơn về từng mã, vui lòng tham khảo lại tài liệu.",,,2,2514,294,1727,ok,,3.11
+Q04,dense,False,DOC0003,DOC0005|DOC0001|DOC0003,True,"**Các bước đăng ký hoạt động CTXH (từ tài liệu có sẵn)**  
+
+1. **Tổ chức hoạt động** – Hoạt động phải được Phòng Công tác Sinh viên (CTSV), Đoàn Thanh niên – Hội Sinh viên, hoặc các Khoa/CLB/Đội Nhóm cấp Trường tổ chức và phát động.  
+   - *Doc ID:* DOC0001, *Section:* 2. Đơn vị tổ chức và ghi nhận.  
+
+2. **Thẩm định danh sách** – Sau khi hoạt động kết thúc, Ban Tổ chức (BTC) của Khoa/CLB/Đội/Nhóm tổng hợp, đối chiếu danh sách điểm danh (check‑in/check‑out) và gửi hồ sơ minh chứng tới Phòng CTSV trong vòng 5 ngày làm việc.  
+   - *Doc ID:* DOC0005, *Section:* 1. Thời hạn và Quy trình xử lý dữ liệu.  
+
+3. **Cập nhật hệ thống** – Phòng CTSV tiến hành thẩm định độc lập và cập nhật trạng thái tích lũy (Điểm CTXH) của sinh viên lên hệ thống quản lý trực tuyến trong vòng 14 ngày làm việc kể từ ngày hoạt động kết thúc.  
+   - *Doc ID:* DOC0005, *Section:* 1. Thời hạn và Quy trình xử lý dữ liệu.  
+
+4. **Công khai kết quả** – Sau khi duyệt, kết quả sẽ hiển thị trực tiếp trên tài khoản cá nhân của sinh viên.  
+   - *Doc ID:* DOC0005, *Section:* 1. Thời hạn và Quy trình xử lý dữ liệu.  
+
+> **Lưu ý:** Tài liệu hiện có không nêu chi tiết các bước đăng ký bởi sinh viên (ví dụ: đăng ký qua hệ thống, nhập mã hoạt động, v.v.). Nếu cần thông tin cụ thể hơn, vui lòng tra cứu thêm tài liệu liên quan.",,,2,2070,1166,1281,ok,,6.89
+Q05,dense,False,DOC0004,DOC0004|DOC0006|DOC0008,True,"**Trường hợp bị từ chối ghi nhận CTXH** (được ghi trong tài liệu quy định):
+
+| Tình huống | Mô tả | Doc_id | Section |
+|------------|-------|--------|---------|
+| Thiếu tính pháp lý | Hoạt động do các tập thể, câu lạc bộ, đội, nhóm tự phát tổ chức mà không có Kế hoạch được phê duyệt bằng văn bản (hoặc ký điện tử) từ Phòng CTSV, Ban Thường vụ Đoàn Thanh niên hoặc Ban Thư ký Hội Sinh viên trường. | DOC0004 | 1. Các lý do từ chối ghi nhận kết quả và hủy đăng ký |
+| Trùng lặp lợi ích thương mại/học thuật | Hoạt động tham gia có nhận thù lao tài chính (tiền lương, tiền công) dưới mọi hình thức, hoặc hoạt động đã được tính vào điểm số/tín chỉ của các môn học bắt buộc trong chương trình đào tạo (ví dụ: Thực tập, dự án, khóa học). | DOC0004 | 1. Các lý do từ chối ghi nhận kết quả và hủy đăng ký |
+
+Nếu có thêm chi tiết cụ thể, bạn có thể tra cứu thêm trong cùng tài liệu (DOC0004) để xem các trường hợp khác.",,,2,2446,483,1655,ok,,4.55
+Q06,dense,False,DOC0005,DOC0003|DOC0005|DOC0001,True,"Sau khi hoạt động kết thúc, Ban Tổ chức (BTC) tổng hợp và gửi hồ sơ minh chứng (check‑in/check‑out) tới Phòng Công tác Sinh viên (CTSV). CTSV tiến hành thẩm định độc lập và cập nhật trạng thái tích lũy (Điểm CTXH) của sinh viên lên hệ thống quản lý trực tuyến trong vòng 14 ngày làm việc kể từ ngày hoạt động kết thúc. Sinh viên có thể xác nhận và xem kết quả trên tài khoản cá nhân của mình.  
+
+- **Doc_id**: DOC0005, **Section**: 1. Thời hạn và Quy trình xử lý dữ liệu.  
+- (Thêm) **Doc_id**: DOC0001, **Section**: 2. Đơn vị tổ chức và ghi nhận.",,,2,2074,601,1281,ok,,3.31
+Q07,dense,False,DOC0006,DOC0006|DOC0001|DOC0005,True,,,,,,,,,,
+Q08,dense,False,DOC0007,DOC0006|DOC0005|DOC0003,False,,,,,,,,,,
+Q09,dense,True,,DOC0002|DOC0005|DOC0003,,,,,,,,,,,
+Q10,dense,True,,DOC0008,,,,,,,,,,,
+Q11,dense,True,,DOC0002|DOC0003|DOC0004,,,,,,,,,,,
+Q12,dense,True,,DOC0002|DOC0008|DOC0004,,,,,,,,,,,
+Q01,hybrid,False,DOC0001,DOC0001|DOC0006|DOC0008,True,,,,,,,,,,
+Q02,hybrid,False,DOC0001,DOC0008|DOC0001|DOC0005,True,,,,,,,,,,
+Q03,hybrid,False,DOC0002,DOC0002|DOC0003|DOC0004,True,,,,,,,,,,
+Q04,hybrid,False,DOC0003,DOC0003|DOC0001|DOC0004,True,,,,,,,,,,
+Q05,hybrid,False,DOC0004,DOC0004|DOC0008|DOC0001,True,,,,,,,,,,
+Q06,hybrid,False,DOC0005,DOC0003|DOC0008,False,,,,,,,,,,
+Q07,hybrid,False,DOC0006,DOC0006|DOC0001,True,,,,,,,,,,
+Q08,hybrid,False,DOC0007,DOC0006|DOC0008|DOC0005,False,,,,,,,,,,
+Q09,hybrid,True,,DOC0004|DOC0008|DOC0005,,,,,,,,,,,
+Q10,hybrid,True,,DOC0008|DOC0006,,,,,,,,,,,
+Q11,hybrid,True,,DOC0002|DOC0005|DOC0006,,,,,,,,,,,
+Q12,hybrid,True,,DOC0008|DOC0004|DOC0006,,,,,,,,,,,

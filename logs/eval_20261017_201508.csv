@@ -1,0 +1,121 @@
+﻿id,mode,no_answer,expected_docs,retrieved_docs,hit_at_k,answer,refusal_review,faithfulness_review,calls,prompt_tokens,completion_tokens,max_prompt,agent_status,agent_error,elapsed_seconds
+Q01,dense,False,DOC0001,DOC0001|DOC0008|DOC0006,True,"Quy định chung về CTXH đối với sinh viên được ghi trong **điều 1. Mục đích và Quy định chung** của Quy chế quản lý và ghi nhận Hoạt động Công tác xã hội Sinh viên HCMUTE (doc_id: **DOC0001**, section: *1. Mục đích và Quy định chung*).  
+- Sinh viên chính quy HCMUTE bắt buộc phải hoàn thành đủ số ngày/giờ CTXH theo quy định chương trình đào tạo để xét tốt nghiệp.  
+- Yêu cầu tối thiểu là **40 điểm CTXH** là một trong những điều kiện cần thiết để xét tốt nghiệp.  
+
+Ngoài ra, có những trường hợp miễn trừ hoàn toàn nghĩa vụ tích lũy CTXH, được quy định trong **điều 1. Đối tượng được MIỄN hoàn toàn nghĩa vụ tích lũy CTXH** (doc_id: **DOC0008**, section: *1. Đối tượng được MIỄN hoàn toàn nghĩa vụ tích lũy CTXH*). Ví dụ: sinh viên hệ Liên thông và sinh viên khuyết tật/ thương tật vĩnh viễn được miễn trừ quỹ điểm CTXH trong suốt quá trình học tập tại trường.",,,2,2110,540,1318,ok,,12.03
+Q02,dense,False,DOC0001,DOC0008|DOC0001|DOC0005,True,Không có thông tin đủ căn cứ trong các tài liệu được tra cứu để xác định số ngày CTXH cần tích lũy để tốt nghiệp.,,,2,2217,284,1422,ok,,2.06
+Q03,dense,False,DOC0002,DOC0002|DOC0003|DOC0001,True,"Các mã hoạt động CTXH được liệt kê trong tài liệu “Danh mục Mã Hoạt động CTXH và Thông tin Chi tiết” (doc_id: **DOC0002**, section: **1. Danh sách các mã hoạt động và định mức điểm tiêu chuẩn**):
+
+| Mã hoạt động | Mô tả ngắn gọn |
+|--------------|----------------|
+| **ACT_MHX** | Chiến dịch Tình nguyện Mùa hè xanh |
+| **ACT_XTN** | Chiến dịch Xuân Tình nguyện |
+| **ACT_TSMT** | Chương trình Tiếp sức Mùa thi |
+| **ACT_HMND** | Ngày hội Hiến máu Tình nguyện |
+
+Nếu cần thông tin chi tiết hơn về từng mã, vui lòng tham khảo lại tài liệu.",,,2,2514,294,1727,ok,,3.11
+Q04,dense,False,DOC0003,DOC0005|DOC0001|DOC0003,True,"**Các bước đăng ký hoạt động CTXH (từ tài liệu có sẵn)**  
+
+1. **Tổ chức hoạt động** – Hoạt động phải được Phòng Công tác Sinh viên (CTSV), Đoàn Thanh niên – Hội Sinh viên, hoặc các Khoa/CLB/Đội Nhóm cấp Trường tổ chức và phát động.  
+   - *Doc ID:* DOC0001, *Section:* 2. Đơn vị tổ chức và ghi nhận.  
+
+2. **Thẩm định danh sách** – Sau khi hoạt động kết thúc, Ban Tổ chức (BTC) của Khoa/CLB/Đội/Nhóm tổng hợp, đối chiếu danh sách điểm danh (check‑in/check‑out) và gửi hồ sơ minh chứng tới Phòng CTSV trong vòng 5 ngày làm việc.  
+   - *Doc ID:* DOC0005, *Section:* 1. Thời hạn và Quy trình xử lý dữ liệu.  
+
+3. **Cập nhật hệ thống** – Phòng CTSV tiến hành thẩm định độc lập và cập nhật trạng thái tích lũy (Điểm CTXH) của sinh viên lên hệ thống quản lý trực tuyến trong vòng 14 ngày làm việc kể từ ngày hoạt động kết thúc.  
+   - *Doc ID:* DOC0005, *Section:* 1. Thời hạn và Quy trình xử lý dữ liệu.  
+
+4. **Công khai kết quả** – Sau khi duyệt, kết quả sẽ hiển thị trực tiếp trên tài khoản cá nhân của sinh viên.  
+   - *Doc ID:* DOC0005, *Section:* 1. Thời hạn và Quy trình xử lý dữ liệu.  
+
+> **Lưu ý:** Tài liệu hiện có không nêu chi tiết các bước đăng ký bởi sinh viên (ví dụ: đăng ký qua hệ thống, nhập mã hoạt động, v.v.). Nếu cần thông tin cụ thể hơn, vui lòng tra cứu thêm tài liệu liên quan.",,,2,2070,1166,1281,ok,,6.89
+Q05,dense,False,DOC0004,DOC0004|DOC0006|DOC0008,True,"**Trường hợp bị từ chối ghi nhận CTXH** (được ghi trong tài liệu quy định):
+
+| Tình huống | Mô tả | Doc_id | Section |
+|------------|-------|--------|---------|
+| Thiếu tính pháp lý | Hoạt động do các tập thể, câu lạc bộ, đội, nhóm tự phát tổ chức mà không có Kế hoạch được phê duyệt bằng văn bản (hoặc ký điện tử) từ Phòng CTSV, Ban Thường vụ Đoàn Thanh niên hoặc Ban Thư ký Hội Sinh viên trường. | DOC0004 | 1. Các lý do từ chối ghi nhận kết quả và hủy đăng ký |
+| Trùng lặp lợi ích thương mại/học thuật | Hoạt động tham gia có nhận thù lao tài chính (tiền lương, tiền công) dưới mọi hình thức, hoặc hoạt động đã được tính vào điểm số/tín chỉ của các môn học bắt buộc trong chương trình đào tạo (ví dụ: Thực tập, dự án, khóa học). | DOC0004 | 1. Các lý do từ chối ghi nhận kết quả và hủy đăng ký |
+
+Nếu có thêm chi tiết cụ thể, bạn có thể tra cứu thêm trong cùng tài liệu (DOC0004) để xem các trường hợp khác.",,,2,2446,483,1655,ok,,4.55
+Q06,dense,False,DOC0005,DOC0003|DOC0005|DOC0001,True,"Sau khi hoạt động kết thúc, Ban Tổ chức (BTC) tổng hợp và gửi hồ sơ minh chứng (check‑in/check‑out) tới Phòng Công tác Sinh viên (CTSV). CTSV tiến hành thẩm định độc lập và cập nhật trạng thái tích lũy (Điểm CTXH) của sinh viên lên hệ thống quản lý trực tuyến trong vòng 14 ngày làm việc kể từ ngày hoạt động kết thúc. Sinh viên có thể xác nhận và xem kết quả trên tài khoản cá nhân của mình.  
+
+- **Doc_id**: DOC0005, **Section**: 1. Thời hạn và Quy trình xử lý dữ liệu.  
+- (Thêm) **Doc_id**: DOC0001, **Section**: 2. Đơn vị tổ chức và ghi nhận.",,,2,2074,601,1281,ok,,3.31
+Q07,dense,False,DOC0006,DOC0006|DOC0001|DOC0005,True,"Để tra soát điểm CTXH, bạn cần thực hiện các bước sau (được trích dẫn từ tài liệu quy chế):
+
+| Bước | Hành động | Tài liệu tham khảo |
+|------|-----------|---------------------|
+| 1 | Đăng nhập vào hệ thống trực tuyến của Phòng Công tác Sinh viên (CTSV). | DOC0006 – section **1. Thời hạn tiếp nhận yêu cầu tra soát** |
+| 2 | Kiểm tra dữ liệu tạm thời của hoạt động CTXH mà bạn đã tham gia. | DOC0006 – section **1. Thời hạn tiếp nhận yêu cầu tra soát** |
+| 3 | Gửi yêu cầu tra soát kết quả trong vòng **07 ngày** kể từ ngày CTSV công bố dữ liệu tạm thời. | DOC0006 – section **1. Thời hạn tiếp nhận yêu cầu tra soát** |
+| 4 | Nếu yêu cầu được chấp nhận, hệ thống sẽ hiển thị kết quả chính thức và bạn có thể tính điểm CTXH. | DOC0006 – section **1. Thời hạn tiếp nhận yêu cầu tra soát** |
+
+> **Lưu ý**: Nếu gửi yêu cầu sau 07 ngày, hệ thống sẽ không tiếp nhận và kết quả hiện tại sẽ được coi là chính thức.  
+
+Nếu bạn muốn biết tổng số điểm CTXH hiện có, hãy vào phần “Điểm CTXH” trong hệ thống và kiểm tra số điểm đã ghi nhận. (Thông tin này được quy định chung trong DOC0001 – section **1. Mục đích và Quy định chung**).",,,2,2072,762,1282,ok,,3.69
+Q08,dense,False,DOC0007,DOC0006|DOC0005|DOC0003,False,"Để tra cứu kết quả tham gia CTXH, bạn có thể thực hiện theo các bước sau:
+
+1. **Gửi yêu cầu tra soát**  
+   - Sinh viên có thể gửi yêu cầu tra soát kết quả trong vòng **07 ngày** kể từ khi Phòng Công tác Sinh viên (CTSV) công bố dữ liệu tạm thời của hoạt động lên hệ thống trực tuyến.  
+   - Thông tin chi tiết: **Doc ID: DOC0006**, Section: *1. Thời hạn tiếp nhận yêu cầu tra soát*.
+
+2. **Xem kết quả trên hệ thống**  
+   - Sau khi CTSV thẩm định và cập nhật, kết quả sẽ hiển thị trực tiếp trên tài khoản cá nhân của sinh viên.  
+   - Thời gian cập nhật: trong vòng **14 ngày làm việc** kể từ ngày hoạt động kết thúc.  
+   - Thông tin chi tiết: **Doc ID: DOC0005**, Section: *1. Thời hạn và Quy trình xử lý dữ liệu*.
+
+Nếu bạn chưa thấy kết quả trong thời gian quy định, hãy liên hệ với CTSV để được hỗ trợ.",,,2,2159,368,1369,ok,,2.09
+Q09,dense,True,,DOC0002|DOC0005|DOC0003,,"Không có tài liệu nào trong kho CTXH ghi nhận việc mua iPhone 18 Pro Max sẽ được cộng 100 điểm CTXH.  
+- **Doc ID:** DOC0002, **Section:** 1. Danh sách các mã hoạt động và định mức điểm tiêu chuẩn  
+- **Doc ID:** DOC0003, **Section:** 3. Quy trình xác nhận và Minh chứng  
+
+Hai tài liệu trên liệt kê các mã hoạt động và quy trình ghi nhận điểm, nhưng không đề cập đến việc mua điện thoại hay cộng điểm theo cách bạn mô tả. Do đó, không có căn cứ để khẳng định rằng việc mua iPhone 18 Pro Max sẽ được cộng 100 điểm CTXH.",,,2,2258,406,1462,ok,,4.7
+Q10,dense,True,,DOC0008,,"Không có tài liệu nào trong kho CTXH ghi rõ rằng việc đoạt giải xổ số sẽ miễn toàn bộ nghĩa vụ tích lũy CTXH.  
+
+- **Doc ID:** DOC0008  
+- **Section:** 1. Đối tượng được MIỄN hoàn toàn nghĩa vụ tích lũy CTXH  
+
+Tài liệu này chỉ liệt kê các trường hợp đặc biệt như sinh viên hệ liên thông, sinh viên khuyết tật, v.v., không đề cập đến giải xổ số. Do đó, không có căn cứ để khẳng định việc đoạt giải xổ số sẽ được miễn toàn bộ CTXH.",,,2,2221,282,1428,ok,,4.42
+Q11,dense,True,,DOC0002|DOC0003|DOC0004,,"Xin lỗi, tôi không thể cung cấp thông tin đó.",,,1,790,140,790,ok,,5.47
+Q12,dense,True,,DOC0002|DOC0008|DOC0004,,"Không có quy định nào trong tài liệu CTXH hiện có cho phép tự động cộng 50 điểm khi trời mưa.  
+- **DOC0002** – section “1. Danh sách các mã hoạt động và định mức điểm tiêu chuẩn”  
+- **DOC0008** – section “2. Đối tượng được XEM XÉT GIẢM định mức hoặc thay đổi hình thức tích lũy”  
+
+Hai tài liệu này không đề cập đến việc cộng điểm tự động theo thời tiết.",,,2,2294,359,1498,ok,,2.31
+Q01,hybrid,False,DOC0001,DOC0001|DOC0006|DOC0008,True,"Quy định chung về CTXH đối với sinh viên được ghi trong **đoạn “Mục đích và Quy định chung”** của tài liệu **DOC0001**:
+
+- Sinh viên chính quy HCMUTE bắt buộc hoàn thành đủ số ngày/giờ CTXH theo quy định chương trình đào tạo để xét tốt nghiệp.  
+- Phòng Công tác Sinh viên (CTSV) là đơn vị chủ quản quản lý và duyệt kết quả CTXH.  
+- Sinh viên cần có **đủ 40 điểm CTXH** là một trong những điều kiện cần thiết để xét tốt nghiệp.  
+
+(Tham khảo: DOC0001, section “1. Mục đích và Quy định chung”).",,,2,2111,282,1319,ok,,2.91
+Q02,hybrid,False,DOC0001,DOC0008|DOC0001|DOC0005,True,,,,,,,,error,RuntimeError: Error: LLM API không khả dụng. Vui lòng thử lại.,12.98
+Q03,hybrid,False,DOC0002,DOC0002|DOC0003|DOC0004,True,"Các mã hoạt động Công tác xã hội sinh viên (CTXH) được công nhận tại HCMUTE gồm:
+
+| Mã hoạt động | Mô tả ngắn gọn |
+|--------------|----------------|
+| **ACT_MHX** | Chiến dịch Tình nguyện Mùa hè xanh |
+| **ACT_XTN** | Chiến dịch Xuân Tình nguyện |
+| **ACT_TSMT** | Chương trình Tiếp sức Mùa thi |
+| **ACT_HMND** | Ngày hội Hiến máu Tình nguyện |
+
+Thông tin này được trích từ **doc_id: DOC0002**, phần **section: “1. Danh sách các mã hoạt động và định mức điểm tiêu chuẩn”**.",,,2,2365,277,1578,ok,,4.81
+Q04,hybrid,False,DOC0003,DOC0003|DOC0001|DOC0004,True,,,,,,,,error,RuntimeError: Error: LLM API không khả dụng. Vui lòng thử lại.,10.42
+Q05,hybrid,False,DOC0004,DOC0004|DOC0008|DOC0001,True,,,,,,,,error,RuntimeError: Error: LLM API không khả dụng. Vui lòng thử lại.,5.8
+Q06,hybrid,False,DOC0005,DOC0003|DOC0008,False,,,,,,,,error,RuntimeError: Error: LLM API không khả dụng. Vui lòng thử lại.,5.88
+Q07,hybrid,False,DOC0006,DOC0006|DOC0001,True,,,,,,,,error,RuntimeError: Error: LLM API không khả dụng. Vui lòng thử lại.,6.5
+Q08,hybrid,False,DOC0007,DOC0006|DOC0008|DOC0005,False,"Để tra cứu kết quả tham gia CTXH, bạn thực hiện các bước sau:
+
+1. **Đăng nhập vào hệ thống quản lý sinh viên** (cổng trực tuyến của trường).  
+2. **Chọn mục “Kết quả CTXH”** hoặc “Tra cứu điểm tham gia hoạt động”.  
+3. **Kết quả sẽ được công bố** trong vòng 14 ngày làm việc kể từ ngày hoạt động kết thúc (được xác nhận bởi Phòng Công tác Sinh viên).  
+   - Thông tin này được cập nhật sau khi Ban Tổ chức (BTC) gửi hồ sơ minh chứng và Phòng CTSV thẩm định. (Doc_id: **DOC0005**, section: *1. Thời hạn và Quy trình xử lý dữ liệu*)  
+4. **Xem chi tiết**: Bạn có thể xem danh sách các hoạt động đã tham gia, điểm CTXH tương ứng và thời hạn nhận kết quả.  
+5. **Thời hạn tra soát**: Nếu bạn muốn gửi yêu cầu tra soát kết quả, hãy làm trong vòng 07 ngày kể từ khi dữ liệu tạm thời được công bố. (Doc_id: **DOC0006**, section: *1. Thời hạn tiếp nhận yêu cầu tra soát*)
+
+Nếu chưa thấy kết quả, hãy chờ thêm vài ngày hoặc liên hệ với Phòng CTSV để xác nhận thời gian cập nhật.",,,2,2161,494,1371,ok,,10.8
+Q09,hybrid,True,,DOC0004|DOC0008|DOC0005,,,,,,,,,error,RuntimeError: Error: LLM API không khả dụng. Vui lòng thử lại.,8.75
+Q10,hybrid,True,,DOC0008|DOC0006,,"Không có căn cứ trong tài liệu được tra cứu (DOC0008, section 1) cho thấy việc “đoạt giải xổ số” được miễn toàn bộ nghĩa vụ tích lũy CTXH. Thông tin trong tài liệu chỉ liệt kê các trường hợp đặc biệt như sinh viên liên thông, khuyết tật, v.v. Không có quy định nào liên quan đến giải xổ số. Vì vậy, hiện tại không thể khẳng định rằng việc đoạt giải xổ số sẽ miễn toàn bộ CTXH.",,,2,2135,275,1342,ok,,7.95
+Q11,hybrid,True,,DOC0002|DOC0005|DOC0006,,,,,,,,,error,RuntimeError: Error: LLM API không khả dụng. Vui lòng thử lại.,4.28
+Q12,hybrid,True,,DOC0008|DOC0004|DOC0006,,,,,,,,,error,RuntimeError: Error: LLM API không khả dụng. Vui lòng thử lại.,6.45

@@ -1,0 +1,29 @@
+﻿id,mode,no_answer,expected_docs,retrieved_docs,hit_at_k,answer,refusal_review,faithfulness_review,calls,prompt_tokens,completion_tokens,max_prompt,agent_status,agent_error,elapsed_seconds
+Q01,dense,False,DOC0001,DOC0001|DOC0008|DOC0006,True,"Quy định chung về CTXH đối với sinh viên được ghi trong **điều 1. Mục đích và Quy định chung** của Quy chế quản lý và ghi nhận Hoạt động Công tác xã hội Sinh viên HCMUTE (doc_id: **DOC0001**, section: *1. Mục đích và Quy định chung*).  
+- Sinh viên chính quy HCMUTE bắt buộc phải hoàn thành đủ số ngày/giờ CTXH theo quy định chương trình đào tạo để xét tốt nghiệp.  
+- Yêu cầu tối thiểu là **40 điểm CTXH** là một trong những điều kiện cần thiết để xét tốt nghiệp.  
+
+Ngoài ra, có những trường hợp miễn trừ hoàn toàn nghĩa vụ tích lũy CTXH, được quy định trong **điều 1. Đối tượng được MIỄN hoàn toàn nghĩa vụ tích lũy CTXH** (doc_id: **DOC0008**, section: *1. Đối tượng được MIỄN hoàn toàn nghĩa vụ tích lũy CTXH*). Ví dụ: sinh viên hệ Liên thông và sinh viên khuyết tật/ thương tật vĩnh viễn được miễn trừ quỹ điểm CTXH trong suốt quá trình học tập tại trường.",,,2,2110,540,1318,ok,,12.03
+Q02,dense,False,DOC0001,DOC0008|DOC0001|DOC0005,True,Không có thông tin đủ căn cứ trong các tài liệu được tra cứu để xác định số ngày CTXH cần tích lũy để tốt nghiệp.,,,2,2217,284,1422,ok,,2.06
+Q03,dense,False,DOC0002,DOC0002|DOC0003|DOC0001,True,,,,,,,,,,
+Q04,dense,False,DOC0003,DOC0005|DOC0001|DOC0003,True,,,,,,,,,,
+Q05,dense,False,DOC0004,DOC0004|DOC0006|DOC0008,True,,,,,,,,,,
+Q06,dense,False,DOC0005,DOC0003|DOC0005|DOC0001,True,,,,,,,,,,
+Q07,dense,False,DOC0006,DOC0006|DOC0001|DOC0005,True,,,,,,,,,,
+Q08,dense,False,DOC0007,DOC0006|DOC0005|DOC0003,False,,,,,,,,,,
+Q09,dense,True,,DOC0002|DOC0005|DOC0003,,,,,,,,,,,
+Q10,dense,True,,DOC0008,,,,,,,,,,,
+Q11,dense,True,,DOC0002|DOC0003|DOC0004,,,,,,,,,,,
+Q12,dense,True,,DOC0002|DOC0008|DOC0004,,,,,,,,,,,
+Q01,hybrid,False,DOC0001,DOC0001|DOC0006|DOC0008,True,,,,,,,,,,
+Q02,hybrid,False,DOC0001,DOC0008|DOC0001|DOC0005,True,,,,,,,,,,
+Q03,hybrid,False,DOC0002,DOC0002|DOC0003|DOC0004,True,,,,,,,,,,
+Q04,hybrid,False,DOC0003,DOC0003|DOC0001|DOC0004,True,,,,,,,,,,
+Q05,hybrid,False,DOC0004,DOC0004|DOC0008|DOC0001,True,,,,,,,,,,
+Q06,hybrid,False,DOC0005,DOC0003|DOC0008,False,,,,,,,,,,
+Q07,hybrid,False,DOC0006,DOC0006|DOC0001,True,,,,,,,,,,
+Q08,hybrid,False,DOC0007,DOC0006|DOC0008|DOC0005,False,,,,,,,,,,
+Q09,hybrid,True,,DOC0004|DOC0008|DOC0005,,,,,,,,,,,
+Q10,hybrid,True,,DOC0008|DOC0006,,,,,,,,,,,
+Q11,hybrid,True,,DOC0002|DOC0005|DOC0006,,,,,,,,,,,
+Q12,hybrid,True,,DOC0008|DOC0004|DOC0006,,,,,,,,,,,
