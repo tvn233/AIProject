@@ -1,96 +1,158 @@
-# AI Usage Transparency Report
+# Báo cáo Sử dụng AI (`ai-usage.md`)
 
-**Project:** AI-powered Student Social Work (CTXH) Activity Registration Agent  
-**Student Name:** Hà Ngọc Bảo  
-**Student ID:** 24110078  
+
+## 1. Tỷ lệ phân chia công việc (AI vs. Human)
+
+| Phân khúc công việc | Tỷ lệ đóng góp | Mô tả vai trò |
+|---|:---:|---|
+| **AI** | **60%** | Hỗ trợ phác thảo cấu trúc MCP Server, thiết kế các lớp dữ liệu cho Document Store, đề xuất cách triển khai các tool và gợi ý các trường hợp kiểm thử tự động. |
+| **Human** | **40%** | Xác định yêu cầu nghiệp vụ, hoàn thiện logic xử lý, kiểm tra dữ liệu, xử lý ngoại lệ, kiểm thử và tích hợp các thành phần vào hệ thống. |
 
 ---
 
-## 1. Công cụ AI sử dụng và phương thức phối hợp
+## 2. Chi tiết ứng dụng AI theo từng thành phần
 
-- **Công cụ:** Google Gemini / LLMs.
-- **Phương thức:** Sử dụng AI để gợi ý cấu trúc và viết sơ bộ (draft) một số đoạn code cơ bản. Sau đó, Human trực tiếp kiểm tra, tinh chỉnh logic, xử lý đường dẫn, viết Unit Test, tích hợp các thành phần và quản lý mã nguồn trên Git/GitHub.
+### A. Mô-đun MCP Server & Tools
 
-## 2. Chi tiết đóng góp, prompt gợi ý và mã nguồn phác thảo từ AI
+**Phần công việc:** Xây dựng cấu trúc ban đầu cho MCP Server quản lý hoạt động Công tác xã hội. Thành phần này cung cấp các tool phục vụ đăng ký hoạt động CTXH, kiểm tra trạng thái đăng ký và quy đổi điểm CTXH theo chính sách.
 
-### A. Phần Data Models (`src/models.py`)
+**Công cụ AI sử dụng:** Mô hình ngôn ngữ lớn (LLM) hỗ trợ lập trình Python.
 
-- **Phần việc:** Xây dựng cấu trúc dữ liệu sử dụng Type Hinting cho các tham số đầu vào của MCP Tool.
-- **Prompt gợi ý / Viết sơ bộ:**
+**Prompt chính:**
 
-  > Gợi ý giúp tôi khung cơ bản sử dụng `dataclass` trong Python cho các tham số đầu vào của công cụ đăng ký hoạt động công tác xã hội.
+> Hãy gợi ý khung code Python sử dụng thư viện `mcp.server.fastmcp` để tạo một FastMCP server tên `CTXH Demo`. Cần phác thảo các tool: đăng ký hoạt động (yêu cầu tham số `confirmed` mặc định `False`), kiểm tra trạng thái và quy đổi điểm theo chính sách. Chỉ phác thảo cấu trúc và hàm cơ bản, không viết toàn bộ business logic phức tạp.
 
-- **Mã nguồn phác thảo do AI gợi ý (Draft):**
+**Đoạn code do AI gợi ý/phác thảo:**
 
 ```python
-from dataclasses import dataclass
+from mcp.server.fastmcp import FastMCP
+
+mcp = FastMCP("CTXH Demo")
+
+
+@mcp.tool()
+def register_ctxh_activity_tool(
+    student_id: str,
+    activity_code: str,
+    confirmed: bool = False
+) -> str:
+    """Register CTXH activity in demo DB.
+    
+    Explicit user confirmation is required.
+    """
+    # Phác thảo cấu trúc xử lý đăng ký hoạt động
+    pass
+```
+
+**Nội dung AI hỗ trợ:**
+
+- Đề xuất cách khởi tạo MCP Server bằng `FastMCP`.
+- Gợi ý sử dụng decorator `@mcp.tool()` để khai báo các công cụ thông qua giao thức MCP.
+- Phác thảo tham số đầu vào cho chức năng đăng ký hoạt động.
+- Đề xuất cơ chế xác nhận thông qua tham số `confirmed`, mặc định là `False`.
+- Gợi ý cấu trúc cho các tool kiểm tra trạng thái và quy đổi điểm CTXH.
+
+**Nội dung Human thực hiện:**
+
+- Xác định yêu cầu nghiệp vụ của hệ thống CTXH, bao gồm mã sinh viên `24110078` và các quy tắc xác nhận đăng ký.
+- Hoàn thiện logic đăng ký hoạt động, kiểm tra trạng thái và quy đổi điểm theo chính sách.
+- Bổ sung điều kiện kiểm tra dữ liệu đầu vào và yêu cầu xác nhận trước khi ghi dữ liệu.
+- Xử lý các trường hợp đăng ký trùng lặp, dữ liệu không hợp lệ và ngoại lệ.
+- Kiểm thử và tích hợp các tool với hệ thống thực tế.
+
+---
+
+### B. Cấu trúc tài liệu và kho dữ liệu RAG (`DocumentStore`)
+
+**Phần công việc:** Thiết kế cấu trúc dữ liệu cho mô-đun quản lý kho tài liệu của hệ thống RAG. Thành phần này quản lý tài liệu, các đoạn văn bản được chia nhỏ (chunks) và metadata liên quan.
+
+**Công cụ AI sử dụng:** Mô hình ngôn ngữ lớn (LLM) hỗ trợ lập trình Python.
+
+**Prompt chính:**
+
+> Hãy phác thảo các `dataclass` bằng Python cho một hệ thống RAG tối giản gồm `Document`, `DocumentChunk` và `DocumentStore`. Thêm các phương thức cơ bản như `add_document`, `add_chunks` có kiểm tra trùng lặp `doc_id` và `chunk_id`.
+
+**Đoạn code do AI sinh/phác thảo:**
+
+```python
+from dataclasses import dataclass, field
+from typing import Any
 
 
 @dataclass
-class RegisterCtxhActivityArgs:
-    student_id: str
-    activity_code: str
+class Document:
+    doc_id: str
+    title: str
+    content: str
+    metadata: dict[str, Any] = field(default_factory=dict)
 ```
 
-### B. Phần MCP Server và Stdio Communication (`src/mcp/server.py`)
+**Nội dung AI hỗ trợ:**
 
-- **Phần việc:** Xây dựng vòng lặp giao tiếp qua Stdio, xử lý request JSON, sử dụng đường dẫn database tuyệt đối và tách thông báo lỗi sang `stderr` để tránh làm nhiễu dữ liệu giao tiếp trên `stdout`.
+- Đề xuất sử dụng `dataclass` để biểu diễn cấu trúc tài liệu.
+- Phác thảo các thuộc tính `doc_id`, `title`, `content` và `metadata`.
+- Gợi ý thiết kế các lớp `Document`, `DocumentChunk` và `DocumentStore`.
+- Đề xuất các phương thức `add_document` và `add_chunks` để quản lý tài liệu và các đoạn văn bản.
+- Gợi ý cơ chế kiểm tra trùng lặp mã định danh tài liệu (`doc_id`) và đoạn văn bản (`chunk_id`).
 
-- **Prompt gợi ý / Viết sơ bộ:**
+**Nội dung Human thực hiện:**
 
-  > Hãy phác thảo sơ bộ đoạn code Python xử lý giao tiếp Stdio JSON-RPC, lưu ý cách bỏ qua dòng trống, bắt ngoại lệ và ghi lỗi ra stderr, đồng thời sử dụng stdout flush.
+- Điều chỉnh cấu trúc dữ liệu theo yêu cầu của hệ thống RAG.
+- Hoàn thiện cách lưu trữ và quản lý tài liệu cùng các chunks tương ứng.
+- Bổ sung các điều kiện kiểm tra tính hợp lệ và tính duy nhất của mã định danh.
+- Tích hợp Document Store với quy trình xử lý tài liệu và truy xuất thông tin của hệ thống.
+- Kiểm tra tính nhất quán của dữ liệu trong quá trình thêm và quản lý tài liệu.
 
-- **Mã nguồn phác thảo do AI gợi ý (Draft):**
+---
+
+### C. Mô-đun kiểm thử tự động (`MCPBusinessTests`)
+
+**Phần công việc:** Xây dựng cấu trúc unit test để kiểm tra các kịch bản nghiệp vụ của MCP Server, bao gồm yêu cầu xác nhận trước khi ghi dữ liệu, ngăn chặn đăng ký trùng lặp và xử lý ngoại lệ.
+
+**Công cụ AI sử dụng:** Mô hình ngôn ngữ lớn (LLM) hỗ trợ sinh test case Python.
+
+**Prompt chính:**
+
+> Hãy gợi ý một vài test case mẫu dùng `unittest` để kiểm tra việc gọi tool `register_ctxh_activity` với cơ chế mock `tempfile` cho file JSON database. Chỉ phác thảo hàm setup và test xác nhận.
+
+**Đoạn code do AI phác thảo:**
 
 ```python
-if __name__ == "__main__":
-    for line in sys.stdin:
-        if not line.strip():
-            continue
+import tempfile
+import unittest
+from pathlib import Path
+from unittest.mock import patch
 
-        try:
-            req = json.loads(line)
-            res = handle_mcp_request(req)
 
-            sys.stdout.write(json.dumps(res) + "\n")
-            sys.stdout.flush()
+class MCPBusinessTests(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.patch = patch.object(
+            tools,
+            "DB_FILE",
+            Path(self.tmp.name) / "db.json"
+        )
+        self.patch.start()
 
-        except Exception as e:
-            sys.stderr.write(f"Error: {str(e)}\n")
+    def tearDown(self):
+        self.patch.stop()
+        self.tmp.cleanup()
 ```
 
-### C. Phần Side-Effect Tool và Verification Tool (`src/mcp/server.py`)
+**Nội dung AI hỗ trợ:**
 
-- **Phần việc:** Xây dựng Write Tool (`register_ctxh_activity`) để ghi nhận đăng ký hoạt động và Read Tool (`get_ctxh_registration_status`) để đọc lại, kiểm chứng trạng thái đăng ký.
+- Đề xuất sử dụng thư viện `unittest` để xây dựng bộ kiểm thử tự động.
+- Gợi ý sử dụng `tempfile.TemporaryDirectory()` để tạo thư mục tạm thời phục vụ kiểm thử.
+- Đề xuất sử dụng `unittest.mock.patch` để thay đổi đường dẫn database trong quá trình kiểm thử.
+- Phác thảo cấu trúc `setUp()` và `tearDown()` để khởi tạo và giải phóng tài nguyên kiểm thử.
+- Đề xuất các trường hợp kiểm thử cho xác nhận đăng ký, đăng ký trùng lặp và xử lý ngoại lệ.
 
-- **Prompt gợi ý / Viết sơ bộ:**
+**Nội dung Human thực hiện:**
 
-  > Cho tôi ý tưởng và code mẫu ngắn gọn về cách viết hàm xử lý tool ghi nhận trạng thái vào từ điển hoặc file JSON, cùng với hàm đọc lại để kiểm chứng.
+- Hoàn thiện các test case dựa trên logic nghiệp vụ thực tế của hệ thống.
+- Điều chỉnh cách mock database và các thành phần phụ thuộc để phù hợp với cấu trúc mã nguồn.
+- Kiểm tra kết quả trả về của các tool trong từng trường hợp kiểm thử.
+- Chạy bộ kiểm thử, phân tích lỗi và sửa các trường hợp chưa đáp ứng yêu cầu.
+- Đánh giá tính đúng đắn của hệ thống trong các tình huống hợp lệ và không hợp lệ.
 
-- **Mã nguồn phác thảo do AI gợi ý (Draft):**
-
-```python
-if name == "register_ctxh_activity":
-    student_id = args.get("student_id")
-    activity_code = args.get("activity_code")
-
-    key = f"{student_id}_{activity_code}"
-
-    db["registrations"][key] = {
-        "student_id": student_id,
-        "activity_code": activity_code,
-        "status": "REGISTERED"
-    }
-
-    save_db(db)
-
-    return {
-        "content": [
-            {
-                "type": "text",
-                "text": "Đăng ký thành công"
-            }
-        ]
-    }
-```
-
+---
