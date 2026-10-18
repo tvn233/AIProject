@@ -126,50 +126,78 @@ Groq API và mô hình E5 là thành phần vận hành chương trình; chúng 
 
 ### 2.2. Hà Ngọc Bảo — MCP
 
-#### Tham khảo khung dữ liệu cho công cụ
+#### Xây dựng MCP Server và các công cụ CTXH
 
-- **Prompt:** “Gợi ý giúp tôi khung cơ bản sử dụng `dataclass` trong Python cho các tham số đầu vào của công cụ đăng ký hoạt động công tác xã hội.”
-- **AI làm gì:**  AI tạo **bản nháp**:
+- **Prompt:** “Hãy gợi ý khung code Python sử dụng thư viện `mcp.server.fastmcp` để tạo một FastMCP server tên `CTXH Demo`. Cần phác thảo các tool: đăng ký hoạt động (yêu cầu tham số `confirmed` mặc định `False`), kiểm tra trạng thái và quy đổi điểm theo chính sách. Chỉ phác thảo cấu trúc và hàm cơ bản, không viết toàn bộ business logic phức tạp.”
+- **AI làm gì:** Đề xuất cách khởi tạo MCP Server bằng `FastMCP`, sử dụng decorator `@mcp.tool()` để khai báo các công cụ thông qua giao thức MCP, phác thảo tham số đầu vào cho chức năng đăng ký hoạt động và đề xuất cơ chế xác nhận thông qua tham số `confirmed`, mặc định là `False`. AI cũng gợi ý cấu trúc cho các tool kiểm tra trạng thái và quy đổi điểm CTXH. Đoạn code được AI gợi ý/phác thảo:
 
-  ```python
-  from dataclasses import dataclass
+```python
+from mcp.server.fastmcp import FastMCP
 
-  @dataclass
-  class RegisterCtxhActivityArgs:
-      student_id: str
-      activity_code: str
-  ```
+mcp = FastMCP("CTXH Demo")
 
-- **Tôi làm gì:** Tham khảo type hint cho tham số công cụ và hoàn thiện các tham số trong MCP server. Tôi không khai báo class `RegisterCtxhActivityArgs` là code đang có trong ZIP cuối vì bản ZIP không chứa class đó.
-- **Minh chứng:** Bản khai báo AI thành viên cung cấp; `src/mcp/mcp_server.py` là file để đối chiếu giao diện công cụ cuối.
+@mcp.tool()
+def register_ctxh_activity_tool(
+    student_id: str,
+    activity_code: str,
+    confirmed: bool = False
+) -> str:
+    """Register CTXH activity in demo DB.
 
-#### Tham khảo giao tiếp stdio
+    Explicit user confirmation is required.
+    """
+    # Phác thảo cấu trúc xử lý đăng ký hoạt động
+    pass
+```
 
-- **Prompt:** “Hãy phác thảo sơ bộ đoạn code Python xử lý giao tiếp Stdio JSON-RPC, lưu ý cách bỏ qua dòng trống, bắt ngoại lệ và ghi lỗi ra stderr, đồng thời sử dụng stdout flush.”
-- **AI làm gì:** AI đưa đoạn **nháp**:
+- **Tôi làm gì:** Xác định yêu cầu nghiệp vụ của hệ thống CTXH, bao gồm mã sinh viên 24110078 và các quy tắc xác nhận đăng ký. Hoàn thiện logic đăng ký hoạt động, kiểm tra trạng thái và quy đổi điểm theo chính sách. Bổ sung điều kiện kiểm tra dữ liệu đầu vào, yêu cầu xác nhận trước khi ghi dữ liệu, xử lý các trường hợp đăng ký trùng lặp, dữ liệu không hợp lệ và ngoại lệ; sau đó kiểm thử và tích hợp các tool vào hệ thống.
+- **Minh chứng:** Mã nguồn MCP Server, các công cụ CTXH trong `src/mcp/tools.py` và các bài kiểm thử liên quan trong thư mục `tests/`.
 
-  ```python
-  for line in sys.stdin:
-      if not line.strip():
-          continue
-      try:
-          req = json.loads(line)
-          res = handle_mcp_request(req)
-          sys.stdout.write(json.dumps(res) + "\n")
-          sys.stdout.flush()
-      except Exception as e:
-          sys.stderr.write(f"Error: {e}\n")
-  ```
+#### Thiết kế cấu trúc tài liệu và kho dữ liệu RAG (DocumentStore)
 
-- **Tôi làm gì:** Tham khảo nguyên tắc giữ `stdout` cho giao thức. Bản cuối dùng MCP SDK với `FastMCP` và `ClientSession`, không chạy nguyên đoạn nháp này.
-- **Minh chứng:** `src/mcp/mcp_server.py` và `src/mcp/mcp_client.py` trong ZIP cuối.
+- **Prompt:** “Hãy phác thảo các dataclass bằng Python cho một hệ thống RAG tối giản gồm Document, DocumentChunk và DocumentStore. Thêm các phương thức cơ bản như add_document, add_chunks có kiểm tra trùng lặp doc_id và chunk_id.”
+- **AI làm gì:** Đề xuất sử dụng dataclass để biểu diễn cấu trúc tài liệu, phác thảo các thuộc tính `doc_id`, `title`, `content` và `metadata`. AI gợi ý thiết kế các lớp `Document`, `DocumentChunk` và `DocumentStore`, các phương thức `add_document`, `add_chunks` để quản lý tài liệu và các đoạn văn bản, đồng thời đề xuất cơ chế kiểm tra trùng lặp mã định danh tài liệu (`doc_id`) và đoạn văn bản (`chunk_id`). Đoạn code được AI sinh/phác thảo:
 
-#### Xác nhận trước khi ghi và đọc lại kết quả
+```python
+from dataclasses import dataclass, field
+from typing import Any
 
-- **Prompt:** “Hãy đọc các file MCP trong dự án. Giải thích vai trò server, client, bridge; kiểm tra cơ chế xác nhận trước khi ghi và cách đọc lại dữ liệu. Không tự sửa code.”
-- **AI làm gì:** Phân tích luồng công cụ và chỉ ra các điểm cần kiểm tra. **Prompt này không sinh code.**
-- **Tôi làm gì:** Đối chiếu `bridge.py`: model không tự truyền `confirmed`; terminal yêu cầu xác nhận. Sau khi ghi, `register_and_verify` gọi công cụ đọc để đối chiếu bản ghi và trả `ok` theo kết quả xác minh.
-- **Minh chứng:** `src/mcp/bridge.py`, `src/mcp/mcp_client.py`, `src/mcp/tools.py`, `tests/test_mcp_integration.py`.
+@dataclass
+class Document:
+    doc_id: str
+    title: str
+    content: str
+    metadata: dict[str, Any] = field(default_factory=dict)
+```
+
+- **Tôi làm gì:** Điều chỉnh cấu trúc dữ liệu theo yêu cầu của hệ thống RAG. Hoàn thiện cách lưu trữ và quản lý tài liệu cùng các chunks tương ứng, bổ sung điều kiện kiểm tra tính hợp lệ và tính duy nhất của mã định danh. Tích hợp Document Store với quy trình xử lý tài liệu và truy xuất thông tin của hệ thống, đồng thời kiểm tra tính nhất quán của dữ liệu trong quá trình thêm và quản lý tài liệu.
+- **Minh chứng:** Các lớp `Document`, `DocumentChunk`, `DocumentStore` trong mã nguồn mô-đun RAG và các bài kiểm thử liên quan.
+
+#### Xây dựng kiểm thử tự động (MCPBusinessTests)
+
+- **Prompt:** “Hãy gợi ý một vài test case mẫu dùng unittest để kiểm tra việc gọi tool register_ctxh_activity với cơ chế mock tempfile cho file JSON database. Chỉ phác thảo hàm setup và test xác nhận.”
+- **AI làm gì:** Đề xuất sử dụng thư viện `unittest` để xây dựng bộ kiểm thử tự động, sử dụng `tempfile.TemporaryDirectory()` để tạo thư mục tạm thời phục vụ kiểm thử và `unittest.mock.patch` để thay đổi đường dẫn database trong quá trình kiểm thử. AI phác thảo cấu trúc `setUp()` và `tearDown()` để khởi tạo, giải phóng tài nguyên kiểm thử, đồng thời đề xuất các trường hợp kiểm thử cho xác nhận đăng ký, đăng ký trùng lặp và xử lý ngoại lệ. Đoạn code được AI phác thảo:
+
+```python
+import tempfile
+import unittest
+from pathlib import Path
+from unittest.mock import patch
+
+class MCPBusinessTests(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.patch = patch.object(
+            tools, "DB_FILE", Path(self.tmp.name) / "db.json"
+        )
+        self.patch.start()
+
+    def tearDown(self):
+        self.patch.stop()
+        self.tmp.cleanup()
+```
+- **Tôi làm gì:** Hoàn thiện các test case dựa trên logic nghiệp vụ thực tế của hệ thống. Điều chỉnh cách mock database và các thành phần phụ thuộc để phù hợp với cấu trúc mã nguồn. Kiểm tra kết quả trả về của các tool trong từng trường hợp kiểm thử, chạy bộ kiểm thử, phân tích lỗi và sửa các trường hợp chưa đáp ứng yêu cầu. Cuối cùng, đánh giá tính đúng đắn của hệ thống trong các tình huống hợp lệ và không hợp lệ.
+- **Minh chứng:** Lớp kiểm thử `MCPBusinessTests` và các bài kiểm thử nghiệp vụ MCP trong thư mục `tests/`.
 
 ### 2.3. Nguyễn Công Thành — LLM & Agent
 
