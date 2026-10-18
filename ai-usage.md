@@ -56,11 +56,51 @@ Groq API và mô hình E5 là thành phần vận hành chương trình; chúng 
 - **Tôi làm gì:** Tích hợp hai chế độ tìm kiếm và xem kết quả thực tế của từng chế độ. Tôi đối chiếu `doc_id` cùng nội dung chunk được trả về; không mô tả RRF là phép cộng trực tiếp hai điểm số thô.
 - **Minh chứng:** `src/rag/retriever.py`, `demo_retrieval.py`.
 
+#### Kiểm tra câu có đáp án và câu không có đáp án
 
-#### Đọc quy tắc quy đổi từ DOC0009
+- **Prompt:** “Làm thế nào để kiểm tra RAG có dẫn đúng nguồn và biết từ chối câu hỏi không có đáp án trong corpus?”
+- **AI làm gì:** Gợi ý đối chiếu câu trả lời với `doc_id` kỳ vọng và kiểm tra cách từ chối suy đoán. Đoạn trong bản đánh giá:
 
-- **Prompt:** “Tôi đã biết quy tắc đổi điểm CTXH nhưng chưa biết làm sao để `convert_ctxh_points_policy` đọc `conversion_policy` từ file Markdown DOC0009 rồi tính số ngày. Tôi cần làm thế nào?”
-- **AI làm gì:** Hướng dẫn dùng `MarkdownChunker.parse_yaml_frontmatter` để lấy `conversion_policy`, kiểm tra các giá trị và áp dụng quy tắc trong file. Đây là đoạn **thực tế** trong bản ZIP:
+  ```python
+  unknown = pipeline.ask(UNANSWERABLE_QUESTION, top_k=5)
+  abstained = any(
+      marker in unknown.answer.casefold()
+      for marker in ABSTENTION_MARKERS
+  )
+  passed &= abstained
+  ```
+
+- **Tôi làm gì:** Chạy một câu có đáp án trong CTXH và một câu hỏi điểm CTXH cá nhân không có trong tài liệu; kết quả báo ĐẠT.
+- **Minh chứng:** `src/rag/evaluate_rag.py` và kết quả chạy `python -m src.rag.evaluate_rag`.
+#### Chia tài liệu CTXH.md thành chunk
+
+- **Prompt:** “Tài liệu CTXH.md có các mục I–V. Làm thế nào để chia tài liệu theo đề mục, giữ metadata và giới hạn độ dài mỗi chunk?”
+- **AI làm gì:** Gợi ý điều chỉnh cách nhận diện đề mục, bỏ chunk chỉ chứa tiêu đề và chia các mục dài thành những chunk có phần chồng lấn. Đoạn code được AI hỗ trợ điều chỉnh:
+
+  ```python
+  words = section_content.split()
+  step = max_words - overlap_words
+  for offset in range(0, len(words), step):
+      part = words[offset:offset + max_words]
+      chunks.append(DocumentChunk(
+          chunk_id=f"{document.doc_id}_CHUNK_{len(chunks) + 1:03d}",
+          doc_id=document.doc_id,
+          title=document.title,
+          section=section,
+          content=" ".join(part),
+          metadata=dict(document.metadata),
+      ))
+      if offset + max_words >= len(words):
+          break
+  ```
+
+- **Tôi làm gì:** Đưa tài liệu `CTXH.md` thầy cung cấp vào corpus, điều chỉnh bộ chia để nhận diện các mục I–V và kiểm tra metadata. Chạy `python -m src.rag.chunking`, kết quả tạo 28 chunk từ tài liệu `CTXH001`.
+- **Minh chứng:** `data/corpus/CTXH.md`, `src/rag/chunking.py`, `tests/test_rag.py`; kết quả chạy `python -m src.rag.chunking`.
+
+#### Đọc quy tắc quy đổi từ tài liệu corpus
+
+- **Prompt đã hỏi ở giai đoạn đầu:** “Tôi đã biết quy tắc đổi điểm CTXH nhưng chưa biết làm sao để `convert_ctxh_points_policy` đọc `conversion_policy` từ file Markdown DOC0009 rồi tính số ngày. Tôi cần làm thế nào?” Sau khi chuyển sang tài liệu thầy cung cấp, tôi áp dụng cách làm này cho `CTXH.md`.
+- **AI làm gì:** Hướng dẫn đọc YAML frontmatter, lấy tỷ lệ và quy tắc làm tròn từ `conversion_policy`, rồi tính số ngày dựa trên phần nguyên và điểm dư. Đoạn code được AI hỗ trợ:
 
   ```python
   metadata, _ = MarkdownChunker.parse_yaml_frontmatter(
@@ -81,25 +121,8 @@ Groq API và mô hình E5 là thành phần vận hành chương trình; chúng 
   days = whole_days + extra_days
   ```
 
-- **Tôi làm gì:** Ghi quy tắc vào DOC0009, đưa phần đọc tài liệu vào hàm quy đổi, kiểm tra lỗi metadata và thử `convert_ctxh_points_policy(25)`: kết quả 2,5 ngày, nguồn DOC0009. Quy tắc được lưu trong dữ liệu; tôi không khai báo AI đã tự xác lập tỷ lệ quy đổi.
-- **Minh chứng:** `data/corpus/DOC0009_quy_doi_diem_ctxh.md`, `src/mcp/tools.py`, `logs/demo_20261017_225320.jsonl`.
-
-#### Kiểm tra câu có đáp án và câu không có đáp án
-
-- **Prompt:** “Làm thế nào để kiểm tra RAG có dẫn đúng nguồn và biết từ chối câu hỏi không có đáp án trong corpus?”
-- **AI làm gì:** Gợi ý đối chiếu câu trả lời với `doc_id` kỳ vọng và kiểm tra cách từ chối suy đoán. Đoạn trong bản đánh giá:
-
-  ```python
-  unknown = pipeline.ask(UNANSWERABLE_QUESTION, top_k=5)
-  abstained = any(
-      marker in unknown.answer.casefold()
-      for marker in ABSTENTION_MARKERS
-  )
-  passed &= abstained
-  ```
-
-- **Tôi làm gì:** Chạy một câu có đáp án trong DOC0001 và một câu hỏi điểm CTXH cá nhân không có trong tài liệu; kết quả báo ĐẠT.
-- **Minh chứng:** `src/rag/evaluate_rag.py` và kết quả chạy `python -m src.rag.evaluate_rag`.
+- **Tôi làm gì:** Ghi `conversion_policy` vào frontmatter của `CTXH.md`, đổi đường dẫn trong công cụ quy đổi sang tài liệu này và kiểm tra `convert_ctxh_points_policy(25)`. Kết quả là 2,5 ngày, nguồn `CTXH001, mục II.c`. Quy tắc quy đổi được lấy từ tài liệu CTXH, không phải do AI tự đặt ra.
+- **Minh chứng:** `data/corpus/CTXH.md`, `src/mcp/tools.py`, `logs/demo_20261018_205737.jsonl`.
 
 ### 2.2. Hà Ngọc Bảo — MCP
 
@@ -190,8 +213,8 @@ Groq API và mô hình E5 là thành phần vận hành chương trình; chúng 
 
 - **Prompt:** “Hãy đánh giá câu trả lời của Agent đối với câu hỏi: ‘Tôi có 25 điểm CTXH chưa được duyệt, có đủ điều kiện quy đổi không?’ Đối chiếu với tài liệu corpus, phân biệt kết quả tính điểm và điều kiện phê duyệt. Chỉ phân tích, không tự thay đổi mã nguồn.”
 - **AI làm gì:** Chỉ ra phép quy đổi điểm thành ngày không tự chứng minh điểm đó đã được thẩm định. **Prompt này không sinh code.**
-- **Tôi làm gì:** Đối chiếu nhận xét với DOC0009, ghi đây là một trường hợp Agent cần làm rõ điều kiện; không trình bày nó như toàn bộ việc phát triển Agent và không nhận đã sửa code từ phiên phân tích này.
-- **Minh chứng:** `data/corpus/DOC0009_quy_doi_diem_ctxh.md`, `src/agent/agent.py`.
+- **Tôi làm gì:** Ở giai đoạn trước, nhóm đối chiếu trường hợp này với DOC0009. Sau khi chuyển corpus, nhóm kiểm tra lại quy tắc trong `CTXH.md`. Phép tính 25 điểm = 2,5 ngày không tự chứng minh điểm của một cá nhân đã được duyệt; đây vẫn là giới hạn cần nói rõ khi trả lời.
+- **Minh chứng:** `data/corpus/CTXH.md`, `src/agent/agent.py`, `logs/demo_20261018_210439.jsonl`.
 
 #### Kiểm thử Agent và lưu dấu vết
 

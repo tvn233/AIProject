@@ -66,15 +66,33 @@ class MarkdownChunker:
         """
         if max_words <= 0 or not 0 <= overlap_words < max_words:
             raise ValueError("Cần 0 <= overlap_words < max_words và max_words > 0")
-        body = re.sub(r"(?m)^#\s+[^\n]*\n?", "", document.content, count=1).strip()
-        sections = re.split(r"(?m)(?=^##\s+)", body)
+        body = document.content.strip()
+        sections = re.split(
+            r"(?m)(?=^(?:##\s+|(?:#{1,3}\s*)?(?:\*\*)?(?:I|II|III|IV|V)\.\s+))",
+            body,
+        )
+
         chunks: list[DocumentChunk] = []
         for section_content in sections:
             section_content = section_content.strip()
             if not section_content:
                 continue
+
             first_line = section_content.split("\n", 1)[0]
-            section = first_line.removeprefix("##").strip() if first_line.startswith("##") else "Tổng quan"
+            heading = re.sub(r"^#{1,3}\s*", "", first_line).strip().strip("*").strip()
+            section = (
+                heading
+                if re.match(r"^##\s+", first_line)
+                or re.match(r"^(?:I|II|III|IV|V)\.\s+", heading)
+                else "Tổng quan"
+            )
+            if (
+                section == "Tổng quan"
+                and section_content.strip("* \n").casefold()
+                == document.title.strip("* \n").casefold()
+            ):
+                continue
+
             words = section_content.split()
             step = max_words - overlap_words
             for offset in range(0, len(words), step):

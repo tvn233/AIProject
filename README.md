@@ -2,14 +2,14 @@
 
 **Đồ án AIPR W1–W7.** Agent Loop Python tự viết, Groq LLM, RAG Dense/Hybrid, MCP stdio, đăng ký DEMO JSON có xác nhận và read-after-write verification.
 
-> **Giới hạn:** Không liên kết cổng đăng ký HCMUTE. Đăng ký chỉ lưu vào `data/ctxh_db.json` trên máy chạy. Các tài liệu DOC0001–DOC0008 phải là corpus nhóm tự biên soạn/được phép sử dụng; ZIP tích hợp **không** chứa corpus gốc của máy bạn.
+> **Giới hạn:** Không liên kết cổng đăng ký HCMUTE. Đăng ký chỉ lưu vào `data/ctxh_db.json` trên máy chạy. Corpus trong `data/corpus/CTXH.md` dựa trên tài liệu CTXH do giảng viên cung cấp; nhóm bổ sung YAML metadata để chương trình đọc và truy xuất.
 
 ## Cấu hình
 
-- Python **3.11 trở lên** (máy từng dùng Python 3.10 cần nâng cấp). Windows cần `make` (GNU Make), hoặc dùng lệnh Python tương đương phía dưới.
-- Sao chép các file trong gói vào repo đã có **`data/corpus/DOC0001_...md` đến `DOC0008_...md`**, không xóa corpus. Cấu trúc `data/corpus/*.md` bắt buộc.
-- Tạo `.env` từ `.env.example`, nhập `GROQ_API_KEY` hợp lệ. Không commit `.env`.
-- `make setup && make demo` (máy có GNU Make); Windows PowerShell nếu không có make: `py -3.11 -m pip install -r requirements.txt` rồi `py -3.11 -m main`.
+- Python **3.11 trở lên**; dùng một môi trường ảo riêng cho project. Windows có thể dùng GNU Make hoặc các lệnh Python tương đương phía dưới.
+- Đặt tài liệu giảng viên cung cấp tại `data/corpus/CTXH.md`. File có YAML frontmatter với `doc_id: CTXH001`, `title`, `version`, `owner` và `conversion_policy`; nội dung quy định nằm sau frontmatter.
+- Tạo `.env` từ `.env.example`, nhập `GROQ_API_KEY` hợp lệ. Chương trình đọc `.env` ở gốc project, `data/.env` hoặc `../data/.env`. Không commit khóa API.
+- `make setup && make demo` (máy có GNU Make); trên Windows PowerShell sau khi kích hoạt `.venv`: `python -m pip install -r requirements.txt` rồi `python -m main`.
 
 ## Các lệnh kiểm tra
 
@@ -23,7 +23,7 @@
 | Eval LLM thật, tốn API | `make eval-live` | `python -m scripts.evaluate --agent` |
 | Demo 1 câu không tương tác | — | `python -m main --question "Quy định CTXH?"` |
 
-`make eval` không gọi Groq: đo **retrieval hit@3** trên 8 câu có tài liệu kỳ vọng; 4 câu no_answer không có expected_doc_ids, nên không tính vào hit@3. `make eval-live` gọi Groq 24 lần (12 câu × 2 chế độ), xuất câu trả lời, token và trace. Điền thủ công hai cột `refusal_review`, `faithfulness_review` sau khi đối chiếu tài liệu; không đánh đồng retrieval hit với faithfulness.
+`make eval` không gọi Groq: đo **retrieval hit@3** trên 8 câu có tài liệu kỳ vọng; 4 câu `no_answer` không có `expected_doc_ids`, nên không tính vào hit@3. Corpus hiện chỉ có một `doc_id` là `CTXH001`: Hit@3 theo tài liệu không chứng minh đã chọn đúng chunk. Cần đối chiếu nội dung chunk, trích dẫn và câu trả lời. `make eval-live` đánh giá 12 câu theo hai chế độ (24 lượt); số lần gọi Groq phụ thuộc luồng Agent. Điền thủ công hai cột `refusal_review`, `faithfulness_review` sau khi đối chiếu tài liệu; không đánh đồng retrieval hit với faithfulness.
 
 ## Cấu trúc và kiến trúc
 
@@ -39,18 +39,18 @@ Luồng: `user → LLM Agent → RAG hoặc MCP Client → MCP Server → JSON D
 
 ## Các tình huống demo
 
-1. `Quy chế CTXH là gì?` → Agent gọi RAG, trả lời kèm `DOC...`.
-2. `Mua iPhone có được cộng 100 điểm CTXH không?` → tra cứu rồi nói không có căn cứ.
-3. `Quy đổi 26 điểm CTXH theo quy chế thành ngày?` → tool policy dự kiến 3 ngày (phải đối chiếu bản DOC0001 thực tế).
+1. `Quy chế CTXH là gì?` → Agent gọi RAG, trả lời kèm nguồn `CTXH001`.
+2. `Hiện tại cá nhân tôi đã tích lũy được bao nhiêu ngày CTXH?` → tra cứu rồi nói tài liệu không có dữ liệu cá nhân để xác định.
+3. `25 điểm CTXH đã tích lũy tương đương bao nhiêu ngày?` → công cụ quy đổi trả 2,5 ngày theo `CTXH001`, mục II.c.
 4. `Đăng ký hoạt động 001101 cho sinh viên SV001` → terminal hỏi xác nhận; chỉ nhập **YES** mới ghi DB demo; sau đó MCP đọc lại xác minh. Nhập khác YES → không ghi.
 5. Đăng ký lần hai cùng mã → từ chối trùng.
 
 ## Dữ liệu và logs
 
 - `data/ctxh_db.json` là file phát sinh, gitignored, không chứa dữ liệu thật.
-- `logs/demo_*.jsonl`: log từ các phiên CLI thật; `logs/eval_*.csv`, `logs/eval_live_*.jsonl` từ đánh giá. **Tự chạy ít nhất 3 phiên demo thật** và lưu 3 file jsonl có timestamp, tool args, kết quả và USAGE. Vì logs bị gitignore, sao chép ba file đã rà soát dữ liệu cá nhân vào bộ nộp, hoặc force-add các log đã làm sạch theo yêu cầu GV.
+- `logs/demo_*.jsonl`: log từ các phiên CLI thật; `logs/eval_*.csv`, `logs/eval_live_*.jsonl` từ đánh giá. **Chọn ít nhất 3 phiên demo thật đã chạy đạt** và lưu 3 file JSONL có timestamp, tool args, kết quả và USAGE. Rà soát dữ liệu cá nhân và khóa API trước khi đưa log vào bộ nộp; không chọn các log chạy lỗi làm minh chứng kết quả đạt.
 - Không lưu API key, CCCD, mã OTP, dữ liệu sinh viên thật.
-- `CTXH.md` gốc có quy đổi 10 điểm/ngày và quy tắc làm tròn: dư dưới 5 xuống, đúng 5 thành 0.5 ngày, trên 5 lên 1 ngày. **Xác minh `DOC0001` nhóm trước khi báo cáo công thức này**.
+- `data/corpus/CTXH.md` quy định lấy tổng điểm CTXH đã tích lũy chia cho 10; phần dư dưới 5 làm tròn xuống, đúng 5 tính nửa ngày, trên 5 làm tròn lên một ngày. YAML `conversion_policy` do nhóm bổ sung để công cụ đọc quy tắc này.
 
 ## Đóng góp, nguồn và giới hạn
 

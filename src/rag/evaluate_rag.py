@@ -1,4 +1,4 @@
-"""Kiểm tra hai trường hợp: tài liệu có và không có thông tin trả lời."""
+"""Kiểm tra câu có đáp án và câu không có dữ liệu trong CTXH.md."""
 
 from __future__ import annotations
 
@@ -7,8 +7,13 @@ import re
 from src.rag.rag import RAGPipeline
 
 
-ANSWERABLE_QUESTION = "Sinh viên cần tối thiểu bao nhiêu điểm CTXH để xét tốt nghiệp?"
-UNANSWERABLE_QUESTION = "Điểm CTXH cá nhân hiện tại của tôi là bao nhiêu?"
+ANSWERABLE_QUESTION = (
+    "Theo quy tắc làm tròn trong tài liệu, "
+    "25 điểm CTXH đã tích lũy tương đương bao nhiêu ngày?"
+)
+UNANSWERABLE_QUESTION = (
+    "Hiện tại cá nhân tôi đã tích lũy được bao nhiêu ngày CTXH?"
+)
 
 ABSTENTION_MARKERS = (
     "không cung cấp",
@@ -22,56 +27,46 @@ ABSTENTION_MARKERS = (
 
 def main() -> None:
     pipeline = RAGPipeline.from_corpus("data/corpus")
-    passed = True
 
     print("=== CÂU HỎI CÓ ĐÁP ÁN ===")
     known = pipeline.ask(ANSWERABLE_QUESTION, top_k=5)
 
-    doc1_rank = next(
-        (
-            index
-            for index, source in enumerate(known.sources, start=1)
-            if source.chunk.doc_id == "DOC0001"
-        ),
-        None,
+    relevant_ranks = [
+        index
+        for index, source in enumerate(known.sources, start=1)
+        if source.chunk.doc_id == "CTXH001"
+        and (
+            "chia cho 10" in source.chunk.content.casefold()
+            or "tròn 5 điểm" in source.chunk.content.casefold()
+        )
+    ]
+    has_answer = bool(
+        re.search(r"(?<!\d)2[,.]5(?!\d)|hai\s+ngày\s+rưỡi", known.answer.casefold())
     )
-    has_expected_source = doc1_rank is not None
-    has_answer_40 = bool(
-        re.search(r"\b40\b|bốn mươi", known.answer, re.IGNORECASE)
-    )
-    cites_expected_source = bool(
-        doc1_rank and f"[S{doc1_rank}]" in known.answer
+    cites_relevant_source = any(
+        f"[S{index}]" in known.answer for index in relevant_ranks
     )
 
     print("Câu hỏi:", known.question)
     print("Nguồn:", known.source_doc_ids)
     print("Trả lời:", known.answer)
-    print("Tìm thấy DOC0001:", has_expected_source)
-    print("Có đáp án 40:", has_answer_40)
-    print("Có trích dẫn DOC0001:", cites_expected_source)
+    print("Có đoạn chứa quy tắc quy đổi:", bool(relevant_ranks))
+    print("Có đáp án 2,5 ngày:", has_answer)
+    print("Có trích dẫn đoạn liên quan:", cites_relevant_source)
 
-    passed &= (
-        has_expected_source
-        and has_answer_40
-        and cites_expected_source
-    )
-
-    print("\n=== CÂU HỎI KHÔNG CÓ ĐÁP ÁN TRONG TÀI LIỆU ===")
+    print("\n=== CÂU HỎI KHÔNG CÓ DỮ LIỆU CÁ NHÂN ===")
     unknown = pipeline.ask(UNANSWERABLE_QUESTION, top_k=5)
-
     abstained = any(
         marker in unknown.answer.casefold()
         for marker in ABSTENTION_MARKERS
     )
 
     print("Câu hỏi:", unknown.question)
-    print("Nguồn:", unknown.source_doc_ids)
     print("Trả lời:", unknown.answer)
     print("Từ chối suy đoán:", abstained)
 
-    passed &= abstained
-
-    print("\nKẾT QUẢ:", "ĐẠT" if passed else "CHƯA ĐẠT")
+    passed = bool(relevant_ranks) and has_answer and cites_relevant_source and abstained
+    print("\nKẾT QUẢ:", "PASS" if passed else "FAIL")
     if not passed:
         raise SystemExit(1)
 

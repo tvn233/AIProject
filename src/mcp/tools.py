@@ -50,7 +50,7 @@ def get_ctxh_registration_status(student_id: str, activity_code: str) -> dict:
     return {'found': record is not None, 'record': record}
 
 def convert_ctxh_points(points: float, points_per_day: float) -> dict:
-    """No default exchange rate: use only a rate verified against DOC0001."""
+    """No default exchange rate: use only a rate verified against CTXH001."""
     if isinstance(points, bool) or isinstance(points_per_day, bool):
         raise ValueError('Tham số phải là số')
     points, points_per_day = float(points), float(points_per_day)
@@ -58,7 +58,7 @@ def convert_ctxh_points(points: float, points_per_day: float) -> dict:
         raise ValueError('Điểm hoặc tỷ lệ quy đổi không hợp lệ')
     return {'points': points, 'points_per_day': points_per_day,
             'days': points / points_per_day,
-            'warning': 'Tỷ lệ do người gọi cung cấp; cần đối chiếu quy chế DOC0001'}
+            'warning': 'Tỷ lệ do người gọi cung cấp; cần đối chiếu quy chế CTXH001'}
 
 def convert_ctxh_points_policy(points: int) -> dict:
     if isinstance(points, bool) or not isinstance(points, int) or not 0 <= points <= 100000:
@@ -68,7 +68,7 @@ def convert_ctxh_points_policy(points: int) -> dict:
         Path(__file__).resolve().parents[2]
         / "data"
         / "corpus"
-        / "DOC0009_quy_doi_diem_ctxh.md"
+        / "CTXH.md"
     )
     if not doc_path.is_file():
         raise FileNotFoundError(f"Không tìm thấy chính sách quy đổi: {doc_path}")
@@ -78,18 +78,18 @@ def convert_ctxh_points_policy(points: int) -> dict:
     )
     policy = metadata.get("conversion_policy")
     if not isinstance(policy, dict):
-        raise ValueError("DOC0009 thiếu metadata conversion_policy")
+        raise ValueError("CTXH001 thiếu metadata conversion_policy")
 
     rate = policy.get("points_per_day")
     threshold = policy.get("remainder_threshold")
     rules = policy.get("remainder_rules")
 
     if isinstance(rate, bool) or not isinstance(rate, int) or rate <= 0:
-        raise ValueError("points_per_day trong DOC0009 không hợp lệ")
+        raise ValueError("points_per_day trong CTXH001 không hợp lệ")
     if isinstance(threshold, bool) or not isinstance(threshold, int) or not 0 < threshold < rate:
-        raise ValueError("remainder_threshold trong DOC0009 không hợp lệ")
+        raise ValueError("remainder_threshold trong CTXH001 không hợp lệ")
     if not isinstance(rules, dict):
-        raise ValueError("remainder_rules trong DOC0009 không hợp lệ")
+        raise ValueError("remainder_rules trong CTXH001 không hợp lệ")
 
     whole_days, remainder = divmod(points, rate)
     if remainder < threshold:
@@ -104,5 +104,5 @@ def convert_ctxh_points_policy(points: int) -> dict:
         "points": points,
         "days": days,
         "points_per_day": rate,
-        "source": f"{metadata['doc_id']}, mục 2. Cách làm tròn",
+        "source": f"{metadata['doc_id']}, mục II.c. Quy đổi điểm thành ngày CTXH",
     }

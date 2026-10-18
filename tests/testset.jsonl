@@ -1,12 +1,12 @@
-{"id":"Q01","question":"Quy định chung về CTXH đối với sinh viên là gì?","expected_doc_ids":["DOC0001"],"no_answer":false}
-{"id":"Q02","question":"Sinh viên phải tích lũy bao nhiêu ngày CTXH để tốt nghiệp?","expected_doc_ids":["DOC0001"],"no_answer":false}
-{"id":"Q03","question":"Có những mã hoạt động CTXH nào?","expected_doc_ids":["DOC0002"],"no_answer":false}
-{"id":"Q04","question":"Các bước đăng ký hoạt động CTXH là gì?","expected_doc_ids":["DOC0003"],"no_answer":false}
-{"id":"Q05","question":"Trường hợp nào bị từ chối ghi nhận CTXH?","expected_doc_ids":["DOC0004"],"no_answer":false}
-{"id":"Q06","question":"Sau khi tham gia, sinh viên xác nhận CTXH như thế nào?","expected_doc_ids":["DOC0005"],"no_answer":false}
-{"id":"Q07","question":"Muốn tra soát điểm CTXH cần làm gì?","expected_doc_ids":["DOC0006"],"no_answer":false}
-{"id":"Q08","question":"Làm thế nào để tra cứu kết quả CTXH?","expected_doc_ids":["DOC0007"],"no_answer":false}
-{"id":"Q09","question":"Mua iPhone 18 Pro Max có được cộng 100 điểm CTXH không?","expected_doc_ids":[],"no_answer":true}
-{"id":"Q10","question":"Đoạt giải xổ số có được miễn toàn bộ CTXH không?","expected_doc_ids":[],"no_answer":true}
-{"id":"Q11","question":"Mã OTP ngân hàng của hiệu trưởng là bao nhiêu?","expected_doc_ids":[],"no_answer":true}
-{"id":"Q12","question":"Ngày mai trời mưa thì tự động được cộng 50 điểm CTXH phải không?","expected_doc_ids":[],"no_answer":true}
+{"id":"Q01","question":"Quy định CTXH này áp dụng cho sinh viên hệ chính quy tuyển sinh từ khóa nào?","expected_doc_ids":["CTXH001"],"no_answer":false}
+{"id":"Q02","question":"Ngoài khóa 2012, sinh viên học chương trình từ 4 năm trở lên cần tích lũy tối thiểu bao nhiêu ngày CTXH?","expected_doc_ids":["CTXH001"],"no_answer":false}
+{"id":"Q03","question":"Hoạt động CTXH mà sinh viên đã được trả tiền công có được tính ngày CTXH không?","expected_doc_ids":["CTXH001"],"no_answer":false}
+{"id":"Q04","question":"Trực tiếp hiến máu tình nguyện một lần có mã hoạt động nào và được tính bao nhiêu điểm?","expected_doc_ids":["CTXH001"],"no_answer":false}
+{"id":"Q05","question":"Theo quy tắc làm tròn trong tài liệu, 25 điểm CTXH đã tích lũy tương đương bao nhiêu ngày?","expected_doc_ids":["CTXH001"],"no_answer":false}
+{"id":"Q06","question":"Sinh viên đăng ký hoạt động CTXH qua đâu và nếu số người đăng ký vượt quy mô thì ưu tiên ai?","expected_doc_ids":["CTXH001"],"no_answer":false}
+{"id":"Q07","question":"Sinh viên được khiếu nại kết quả đánh giá CTXH trong bao lâu sau khi công bố?","expected_doc_ids":["CTXH001"],"no_answer":false}
+{"id":"Q08","question":"Chậm nhất bao lâu sau khi hoạt động kết thúc phải nhập và công bố kết quả CTXH trên phần mềm PSC?","expected_doc_ids":["CTXH001"],"no_answer":false}
+{"id":"Q09","question":"Hiện tại cá nhân tôi đã tích lũy được bao nhiêu ngày CTXH?","expected_doc_ids":[],"no_answer":true}
+{"id":"Q10","question":"Ngày cụ thể của đợt hiến máu tình nguyện tiếp theo là ngày nào?","expected_doc_ids":[],"no_answer":true}
+{"id":"Q11","question":"Hoạt động CTXH tôi tham gia hôm qua đã được chấm điểm trên PSC chưa?","expected_doc_ids":[],"no_answer":true}
+{"id":"Q12","question":"Đơn khiếu nại CTXH của cá nhân tôi hiện đã được xử lý đến đâu?","expected_doc_ids":[],"no_answer":true}
